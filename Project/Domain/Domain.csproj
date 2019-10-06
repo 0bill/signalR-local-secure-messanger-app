@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Conversation.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

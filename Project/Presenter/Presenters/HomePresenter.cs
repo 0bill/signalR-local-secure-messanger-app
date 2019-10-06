@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
+using Domain;
 using Presenter.Views;
 using Unity;
 using Unity.Injection;
@@ -22,7 +24,7 @@ namespace Presenter.Presenters
         //, ITestPresenter x
         public HomePresenter(IUnityContainer unityContainer, IHomeView view) : base(view)
         {
-
+            var user = new User();
             Console.WriteLine("Home" + this.GetHashCode());
             Console.WriteLine("unityContainer" + unityContainer.GetHashCode());
             container = unityContainer;
