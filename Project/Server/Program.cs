@@ -16,7 +16,7 @@ namespace Server
                 
                 using (WebApp.Start<Startup>(url))
                 {
-                    Console.WriteLine("Server starts...");
+                    Console.WriteLine("Server starts... with " + url);
                     Console.ReadLine();
                 }
             }

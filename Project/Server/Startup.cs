@@ -16,12 +16,9 @@ namespace Server
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
             Route.RegisterRoutes(httpConfig);
+
             app.UseCors(CorsOptions.AllowAll);
-            app.Map("/chat", map =>
-            {
-                HubConfiguration hubConfig = new HubConfiguration();
-                map.RunSignalR();
-            });
+            app.MapSignalR("/chat", new HubConfiguration());
 
             app.UseWebApi(httpConfig);
 

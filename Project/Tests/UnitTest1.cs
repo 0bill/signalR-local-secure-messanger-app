@@ -8,13 +8,11 @@ using Xunit.Abstractions;
 
 namespace Tests
 {
-    public class UnitTest1
+    public class UnitTest1 : GenericTest
     {
-        private readonly ITestOutputHelper output;
 
-        public UnitTest1(ITestOutputHelper output)
+        public UnitTest1(ITestOutputHelper output) : base(output)
         {
-            this.output = output;
         }
 
         [Fact]
@@ -69,9 +67,9 @@ namespace Tests
             conversation3.User.Add(user2);
             conversation3.User.Add(user3);
 
-            output.WriteLine(conversation1.Id.ToString());
-            output.WriteLine(conversation2.Id.ToString());
-            output.WriteLine(conversation3.Id.ToString());
+            this.Output.WriteLine(conversation1.Id.ToString());
+            this.Output.WriteLine(conversation2.Id.ToString());
+            this.Output.WriteLine(conversation3.Id.ToString());
 
             conversationsList.Add(conversation1);
             conversationsList.Add(conversation2);
@@ -89,15 +87,17 @@ namespace Tests
 
             var conversations = q.ToList();
             for (int i = 0; i < conversations.Count; i++)
-            {                
-                
-                output.WriteLine(conversations[i].Id.ToString());
-                output.WriteLine(conversations[i].User.ToArray()[0].Username.ToString());
-                output.WriteLine(conversations[i].User.ToArray()[1].Username.ToString());
+            {
+
+                this.Output.WriteLine(conversations[i].Id.ToString());
+                this.Output.WriteLine(conversations[i].User.ToArray()[0].Username.ToString());
+                this.Output.WriteLine(conversations[i].User.ToArray()[1].Username.ToString());
 
 
             }
       
         }
+
+      
     }
 }
