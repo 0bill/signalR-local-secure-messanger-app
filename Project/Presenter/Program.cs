@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Presenter.Helpers;
 using Unity;
 using Unity.Lifetime;
    
@@ -22,6 +23,7 @@ namespace Presenter
 
             unityContainer = new UnityContainer()
                 .RegisterType<IHomePresenter, HomePresenter>(new ContainerControlledLifetimeManager())
+                .RegisterType<IServerConnection, ServerConnection>(new ContainerControlledLifetimeManager())
                 .RegisterType<IHomeView, HomeView>(new ContainerControlledLifetimeManager())
                 .RegisterType<ITestPresenter, TestPresenter>(new ContainerControlledLifetimeManager())
                 //new TransientLifetimeManager()
@@ -32,6 +34,7 @@ namespace Presenter
 
             //Init one instance of home presenter
             unityContainer.RegisterInstance(unityContainer.Resolve<HomePresenter>());
+            unityContainer.RegisterInstance(unityContainer.Resolve<ServerConnection>());
 
             
 
