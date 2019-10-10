@@ -1,24 +1,20 @@
-﻿using Presenter.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Client.Views;
 using Unity;
 
-namespace Presenter.Presenters
+namespace Client.Controllers
 {
-    public class TestPresenter : Presenter<ITestView>, ITestPresenter
+    public class TestController : Controller<ITestView>, ITestController
     {
         ITestView test;
         public int inst = new Random().Next(100000);
 
         public int getinstance => inst;
         //ITestView itest,
-        public TestPresenter(IUnityContainer unityContainer, ITestView view) : base(view)
+        public TestController(IUnityContainer unityContainer, ITestView view) : base(view)
         {
             Console.WriteLine("unityContainer" + unityContainer.GetHashCode());
-            Console.WriteLine("Home" + unityContainer.Resolve<HomePresenter>().GetHashCode());
+            Console.WriteLine("Home" + unityContainer.Resolve<HomeController>().GetHashCode());
             Console.WriteLine("TestPresenter created" + inst.ToString());
 
             test = view;
@@ -32,7 +28,7 @@ namespace Presenter.Presenters
 
 
 
-        ~TestPresenter()
+        ~TestController()
         {
             Console.WriteLine("TestPresenter die"
             +inst.ToString());

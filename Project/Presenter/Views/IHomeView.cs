@@ -1,7 +1,6 @@
 ﻿using System;
-using Presenter.Views;
 
-namespace Presenter
+namespace Client.Views
 {
     public interface IHomeView : IView
     {

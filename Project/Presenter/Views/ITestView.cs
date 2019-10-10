@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Presenter.Presenters;
-
-namespace Presenter.Views
+﻿using Client.Controllers;
+namespace Client.Views
 {
     public interface ITestView
 
@@ -13,7 +7,7 @@ namespace Presenter.Views
         
         void show();
         void chanetext(string test);
-        void setPresenter(ITestPresenter p);
+        void setPresenter(ITestController p);
         int inst { get; }
     }
 }

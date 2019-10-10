@@ -1,8 +1,8 @@
-﻿using Presenter.Views;
+﻿using Client.Views;
 
-namespace Presenter.Presenters
+namespace Client.Controllers
 {
-    public interface ITestPresenter
+    public interface ITestController
     {
 
         ITestView GetView();

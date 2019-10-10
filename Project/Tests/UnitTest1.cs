@@ -20,22 +20,22 @@ namespace Tests
         {
             var user1 = new User()
             {
-                Id = System.Guid.NewGuid(),
+                
                 Username = "user1"
             };
             var user2 = new User()
             {
-                Id = System.Guid.NewGuid(),
+                
                 Username = "user2"
             };
             var user3 = new User()
             {
-                Id = System.Guid.NewGuid(),
+                
                 Username = "user3"
             };
             var user4 = new User()
             {
-                Id = System.Guid.NewGuid(),
+                
                 Username = "user4"
             };
 
@@ -43,7 +43,7 @@ namespace Tests
 
             var conversation1 = new Conversation()
             {
-                Id = System.Guid.NewGuid(),
+                
                 User = new List<User>()
             };
             conversation1.User.Add(user1);
@@ -52,7 +52,7 @@ namespace Tests
 
             var conversation2 = new Conversation()
             {
-                Id = System.Guid.NewGuid(),
+                
                 User = new List<User>()
             };
             conversation2.User.Add(user1);
@@ -61,7 +61,7 @@ namespace Tests
 
             var conversation3 = new Conversation()
             {
-                Id = System.Guid.NewGuid(),
+                
                 User = new List<User>()
             };
             conversation3.User.Add(user2);

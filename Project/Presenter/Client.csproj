@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3561F8D0-1C85-4894-9E3E-4C177E47E7F2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Presenter</RootNamespace>
-    <AssemblyName>Presenter</AssemblyName>
+    <RootNamespace>Client</RootNamespace>
+    <AssemblyName>Clinet</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -63,11 +63,11 @@
   <ItemGroup>
     <Compile Include="Helpers\EventHelper.cs" />
     <Compile Include="Helpers\ServerConnection.cs" />
-    <Compile Include="Presenters\HomePresenter.cs" />
-    <Compile Include="Presenters\IHomePresenter.cs" />
-    <Compile Include="Presenters\ITestPresenter.cs" />
-    <Compile Include="Presenters\Presenter.cs" />
-    <Compile Include="Presenters\TestPresenter.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IHomeController.cs" />
+    <Compile Include="Controllers\ITestController.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Views\HomeView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +93,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Views\HomeView.resx">
       <DependentUpon>HomeView.cs</DependentUpon>

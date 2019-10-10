@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
+using Client.Views;
 using Domain;
-using Presenter.Views;
 using Unity;
-using Unity.Injection;
-using Unity.Resolution;
 
-namespace Presenter.Presenters
+namespace Client.Controllers
 {
-    class HomePresenter : Presenter<IHomeView>, IHomePresenter
+    class HomeController : Controller<IHomeView>, IHomeController
     {
 
 
@@ -22,7 +15,7 @@ namespace Presenter.Presenters
         IUnityContainer container;
 
         //, ITestPresenter x
-        public HomePresenter(IUnityContainer unityContainer, IHomeView view) : base(view)
+        public HomeController(IUnityContainer unityContainer, IHomeView view) : base(view)
         {
             var user = new User();
             Console.WriteLine("Home" + this.GetHashCode());
@@ -57,7 +50,7 @@ namespace Presenter.Presenters
         /// </summary>
         public void runTest()
         {
-           ITestPresenter tempTestView = container.Resolve<TestPresenter>();
+            ITestController tempTestView = container.Resolve<TestController>();
 
             //passing values to constructor
             /*

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using Domain;
 using Microsoft.AspNet.SignalR.Client;
 
-namespace Presenter.Helpers
+namespace Client.Helpers
 {
     public class ServerConnection : IServerConnection
     {
@@ -18,7 +15,13 @@ namespace Presenter.Helpers
         public ServerConnection()
         {
             //ConnectAsync();
-            WebApiConnect();
+            //WebApiConnect();
+
+        }
+
+        private void LoginUser(User user)
+        {
+
         }
 
         private void WebApiConnect()
