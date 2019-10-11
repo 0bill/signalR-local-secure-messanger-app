@@ -11,7 +11,20 @@ namespace DatabaseMS
     {
         static void Main(string[] args)
         {
-            
+            using (var model = new DatabaseContext())
+            {
+              
+
+                var tables = model.Users.Select(x => x).ToList();
+                foreach (var x in tables)
+                {
+                    Console.WriteLine(x.Id + x.Username);
+                }
+
+                Console.ReadKey();
+            }
+
+
         }
     }
 }
