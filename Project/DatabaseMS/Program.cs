@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain;
 
-namespace Domain
+namespace DatabaseMS
 {
     class Program
     {
-        public static async Task Main(string[] args)
+        static void Main(string[] args)
         {
+            
         }
     }
 }
