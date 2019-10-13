@@ -7,14 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Presenter.Presenters;
+using Client.Controllers;
+using Client.Views;
 
-namespace Presenter.Views
+namespace Client.Views
 {
     public partial class TestView : Form, ITestView
     {
         private string test = "nie ma";
-        private ITestPresenter p;
+        private ITestController p;
         private int instance = new Random().Next(100000);
 
         public int inst
@@ -36,7 +37,7 @@ namespace Presenter.Views
 
         }
 
-        public void setPresenter(ITestPresenter p)
+        public void setPresenter(ITestController p)
         {
             this.p = p;
          
@@ -57,7 +58,7 @@ namespace Presenter.Views
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            var testPresenter = (TestPresenter) p;
+            var testPresenter = (TestController) p;
             this.button1.Text = testPresenter.getinstance.ToString();
         }
 

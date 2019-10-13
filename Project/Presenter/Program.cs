@@ -1,14 +1,13 @@
-﻿using Presenter.Presenters;
-using Presenter.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using Client.Controllers;
+using Client.Helpers;
+using Client.Views;
+using Presenter;
 using Unity;
 using Unity.Lifetime;
-   
-namespace Presenter
+
+namespace Client
 {
     static class Program
     {
@@ -21,9 +20,10 @@ namespace Presenter
             IUnityContainer unityContainer;
 
             unityContainer = new UnityContainer()
-                .RegisterType<IHomePresenter, HomePresenter>(new ContainerControlledLifetimeManager())
+                .RegisterType<IHomeController, HomeController>(new ContainerControlledLifetimeManager())
+                .RegisterType<IServerConnection, ServerConnection>(new ContainerControlledLifetimeManager())
                 .RegisterType<IHomeView, HomeView>(new ContainerControlledLifetimeManager())
-                .RegisterType<ITestPresenter, TestPresenter>(new ContainerControlledLifetimeManager())
+                .RegisterType<ITestController, TestController>(new ContainerControlledLifetimeManager())
                 //new TransientLifetimeManager()
                 .RegisterType<ITestView, TestView>(new TransientLifetimeManager()) ;
 
@@ -31,13 +31,14 @@ namespace Presenter
             Application.SetCompatibleTextRenderingDefault(false);
 
             //Init one instance of home presenter
-            unityContainer.RegisterInstance(unityContainer.Resolve<HomePresenter>());
+            unityContainer.RegisterInstance(unityContainer.Resolve<HomeController>());
+            unityContainer.RegisterInstance(unityContainer.Resolve<ServerConnection>());
 
             
 
             
 
-            Application.Run((Form)unityContainer.Resolve<HomePresenter>().GetMainView());
+            Application.Run((Form)unityContainer.Resolve<HomeController>().GetMainView());
         }
     }
 }

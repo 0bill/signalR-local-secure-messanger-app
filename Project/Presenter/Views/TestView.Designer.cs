@@ -1,4 +1,4 @@
-﻿namespace Presenter.Views
+﻿namespace Client.Views
 {
     partial class TestView
     {
@@ -18,7 +18,7 @@
                 components.Dispose();
             }
             base.Dispose(disposing);
-            
+
         }
 
         #region Windows Form Designer generated code

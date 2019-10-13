@@ -16,12 +16,24 @@ namespace Database.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity("Domain.Conversation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Conversations");
+                });
+
             modelBuilder.Entity("Domain.Message", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AuthorId");
+
+                    b.Property<int?>("ConversationId");
 
                     b.Property<string>("Text");
 
@@ -29,15 +41,19 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConversationId");
+
                     b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Domain.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConnectionId");
+
+                    b.Property<int?>("ConversationId");
 
                     b.Property<string>("Password");
 
@@ -47,7 +63,23 @@ namespace Database.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConversationId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.Message", b =>
+                {
+                    b.HasOne("Domain.Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId");
+                });
+
+            modelBuilder.Entity("Domain.User", b =>
+                {
+                    b.HasOne("Domain.Conversation")
+                        .WithMany("User")
+                        .HasForeignKey("ConversationId");
                 });
 #pragma warning restore 612, 618
         }

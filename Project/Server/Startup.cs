@@ -14,15 +14,14 @@ namespace Server
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseCors(CorsOptions.AllowAll);
+
             HttpConfiguration httpConfig = new HttpConfiguration();
             Route.RegisterRoutes(httpConfig);
 
-            app.UseCors(CorsOptions.AllowAll);
             app.MapSignalR("/chat", new HubConfiguration());
 
             app.UseWebApi(httpConfig);
-
-
         }
     }
 }
