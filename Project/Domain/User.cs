@@ -11,7 +11,9 @@ namespace Domain
         [Required]
         public string Username { get; set; }
         public string Password { get; set; }
+        [NotMapped]
         public string ConnectionId { get; set; }
+        [NotMapped]
         public string Token { get; set; }
 
     }

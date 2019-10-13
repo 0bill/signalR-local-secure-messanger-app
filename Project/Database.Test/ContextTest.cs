@@ -1,8 +1,11 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
 namespace Database.Test
 {
-    public class UnitTest1
+    public class ContextTest
     {
         [Fact]
         public void DatabaseConnectionTest()

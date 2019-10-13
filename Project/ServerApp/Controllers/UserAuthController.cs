@@ -4,13 +4,13 @@ namespace ServerApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestController : ControllerBase
+    public class UserAuthController : ControllerBase
     {
-        // POST: api/Test
+        // POST: api/UserAuth
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
-
+       
     }
 }
