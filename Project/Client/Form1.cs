@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNet.SignalR.Client;
+using System;
+using System.Net.Http;
 using System.Windows.Forms;
 
 namespace Client
@@ -15,7 +10,28 @@ namespace Client
         public Form1()
         {
             InitializeComponent();
+
+            ConnectAsync();
+
         }
 
+        private async void ConnectAsync()
+        {
+            var url = "https://localhost:5001/chat";
+            HubConnection Connection = new HubConnection(url);
+            IHubProxy hub = Connection.CreateHubProxy("ChatHub");
+
+            try
+            {
+                await Connection.Start();
+                Console.WriteLine("Connect");
+
+            }
+            catch (HttpRequestException)
+            {
+                Console.WriteLine("Not connect");
+
+            }
+        }
     }
 }

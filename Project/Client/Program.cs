@@ -23,17 +23,14 @@ namespace Client
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            IUnityContainer unityContainer;
-
-            unityContainer = new UnityContainer()
+            IUnityContainer unityContainer = new UnityContainer()
                 .RegisterType<IHomeController, HomeController>(new ContainerControlledLifetimeManager())
-                .RegisterType<IHomeView, HomeView>(new ContainerControlledLifetimeManager())
-                ;
+                .RegisterType<IHomeView, HomeView>(new ContainerControlledLifetimeManager());
 
-            unityContainer.RegisterInstance(unityContainer.Resolve<HomeController>());
+            unityContainer.RegisterInstance(unityContainer.Resolve<IHomeController>());
 
           
-            Application.Run((Form)unityContainer.Resolve<HomeController>().GetMainView());
+            Application.Run((Form)unityContainer.Resolve<IHomeController>().GetMainView());
 
         }
     }

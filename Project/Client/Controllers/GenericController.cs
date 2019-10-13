@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Client.Controllers
+﻿namespace Client.Controllers
 {
     public abstract class GenericController<T>
     {
