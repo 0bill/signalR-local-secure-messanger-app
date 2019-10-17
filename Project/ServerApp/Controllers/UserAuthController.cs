@@ -23,9 +23,9 @@ namespace ServerApp.Controllers
 
         // POST: api/UserAuth
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public ActionResult<User> PostUser(User user)
         {
-            
+
             if (_unitOfWork.UserRepository.IsLoginUserValid(user))
             {
                 user.Username = Guid.NewGuid().ToString();
@@ -34,6 +34,6 @@ namespace ServerApp.Controllers
             return BadRequest();
 
         }
-       
+
     }
 }

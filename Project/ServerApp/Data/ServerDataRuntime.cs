@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace ServerApp.Data
 {
-    public interface IRuntimeData
+    public interface IServerDataRuntime
     {
         void msg();
     }
-    public class RuntimeData : IRuntimeData
+    public class ServerDataRuntime : IServerDataRuntime
     {
         private int x = 0;
         public void msg()

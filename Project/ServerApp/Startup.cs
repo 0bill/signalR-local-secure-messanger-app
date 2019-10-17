@@ -27,7 +27,7 @@ namespace ServerApp
             services.AddControllers();
             //services.AddCors();
             services.AddSignalR();
-            services.AddSingleton<IRuntimeData, RuntimeData>();
+            services.AddSingleton<IServerDataRuntime, ServerDataRuntime>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

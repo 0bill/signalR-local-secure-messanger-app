@@ -10,17 +10,17 @@ namespace ServerApp
 {
     public class Test
     {
-        private IRuntimeData data;
+        private IServerDataRuntime _dataRuntime;
 
-        public Test(IRuntimeData data)
+        public Test(IServerDataRuntime dataRuntime)
         {
-            this.data = data;
+            this._dataRuntime = dataRuntime;
         }
 
 
         public void elos()
         {
-            data.msg();
+            _dataRuntime.msg();
         }
     }
     public class Program

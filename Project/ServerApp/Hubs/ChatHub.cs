@@ -7,38 +7,29 @@ namespace ServerApp.Hubs
 {
     public class ChatHub : Hub
     {
-        private IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
         public ChatHub(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
-        public void Lol()
+        public void IsSSL()
         {
             if (Context.GetHttpContext().Request.IsHttps)
                 Console.WriteLine("Got SSL");
-            var x = (IRuntimeData)_serviceProvider.GetService(typeof(IRuntimeData));
+            //get instance of GLOBAL DATA
+            var x = (IServerDataRuntime)_serviceProvider.GetService(typeof(IServerDataRuntime));
             x.msg();
         }
         public override Task OnConnectedAsync()
         {
-            
-
-            Console.WriteLine(Context.ConnectionAborted);
-            //Context.Abort();
-            Console.WriteLine(Context.ConnectionAborted);
-
             Console.WriteLine("Connected " + Context.ConnectionId);
-
-            var httpCtx = Context.GetHttpContext();
-            Lol();
-            var someHeaderValue = httpCtx.Request.Headers["Foo"].ToString();
-            Console.WriteLine("HEADER " + someHeaderValue);
-
-            string s = Context.GetHttpContext().Request.Headers["Foo"].ToString();
-
             
+            var token = Context.GetHttpContext().Request.Headers["token"].ToString();
+            Console.WriteLine("HEADER " + token);
+            //TODO: if token wrong then Context.Abort();
+            //Console.WriteLine(Context.ConnectionAborted);
 
-
+            IsSSL();
             return base.OnConnectedAsync();
            
         }

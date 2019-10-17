@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Client.Controllers;
+using Client.Data;
 using Client.Views;
 using Unity;
 using Unity.Lifetime;
@@ -24,10 +25,12 @@ namespace Client
             Application.SetCompatibleTextRenderingDefault(false);
 
             IUnityContainer unityContainer = new UnityContainer()
+                .RegisterType<IClientDataRuntime, ClientDataRuntime>(new ContainerControlledLifetimeManager())
                 .RegisterType<IHomeController, HomeController>(new ContainerControlledLifetimeManager())
                 .RegisterType<IHomeView, HomeView>(new ContainerControlledLifetimeManager());
 
             unityContainer.RegisterInstance(unityContainer.Resolve<IHomeController>());
+            unityContainer.RegisterInstance(unityContainer.Resolve<IClientDataRuntime>());
 
           
             Application.Run((Form)unityContainer.Resolve<IHomeController>().GetMainView());
