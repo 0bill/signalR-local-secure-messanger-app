@@ -13,9 +13,7 @@ namespace Database.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Username = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: true),
-                    ConnectionId = table.Column<string>(nullable: true),
-                    Token = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

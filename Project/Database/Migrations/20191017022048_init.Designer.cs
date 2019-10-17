@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(SQLiteContext))]
-    [Migration("20191012004818_init")]
+    [Migration("20191017022048_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,13 +23,7 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ConnectionId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Password")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Token")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")

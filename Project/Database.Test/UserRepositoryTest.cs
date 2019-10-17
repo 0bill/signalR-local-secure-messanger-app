@@ -3,11 +3,16 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Database.Test
 {
-    public class UserRepositoryTest
+    public class UserRepositoryTest : OutputTest
     {
+        public UserRepositoryTest(ITestOutputHelper output) : base(output)
+        {
+        }
+        
         private readonly DbContextOptions<SQLiteContext> _dbOptions = new DbContextOptionsBuilder<SQLiteContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .EnableSensitiveDataLogging()
@@ -16,7 +21,7 @@ namespace Database.Test
         [Fact]
         public void TestLoginUser()
         {
-           var user = new User
+            var user = new User
             {
                 Username = "test",
                 Password = "testPassword"
@@ -27,15 +32,23 @@ namespace Database.Test
             sqLiteContext.Users.Add(user);
             sqLiteContext.SaveChanges();
             var isLoginUserValid = unitOfWork.UserRepository.IsLoginUserValid(user);
-            
+
             Assert.True(isLoginUserValid);
         }
 
         [Fact]
-        public void TestCreateUser()
+        public void TestUserPassword()
         {
-            
+            string password = "test";
+            var user = new User()
+            {
+                Username = "Test",
+                Password = password
+            };
+            Output.WriteLine(user.Password);
+            Assert.NotSame(password, user.Password);
         }
-        
+
+     
     }
 }
