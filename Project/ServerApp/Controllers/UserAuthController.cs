@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Database;
+using Domain;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ServerApp.Controllers
 {
@@ -6,10 +12,27 @@ namespace ServerApp.Controllers
     [ApiController]
     public class UserAuthController : ControllerBase
     {
+        private IUnitOfWork _unitOfWork;
+
+        public UserAuthController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+
+
         // POST: api/UserAuth
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
+            
+            if (_unitOfWork.UserRepository.IsLoginUserValid(user))
+            {
+                user.Username = Guid.NewGuid().ToString();
+                return Ok(user);
+            }
+            return BadRequest();
+
         }
        
     }

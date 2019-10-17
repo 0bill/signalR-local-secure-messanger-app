@@ -13,8 +13,6 @@ namespace Client.Controllers
     class HomeController : GenericController<IHomeView>, IHomeController
     {
 
-
-
         IHomeView _homeView;
         // ITestPresenter _testView;
         IUnityContainer container;

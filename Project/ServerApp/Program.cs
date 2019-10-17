@@ -10,9 +10,9 @@ namespace ServerApp
 {
     public class Test
     {
-        private IServerRuntimeData data;
+        private IRuntimeData data;
 
-        public Test(IServerRuntimeData data)
+        public Test(IRuntimeData data)
         {
             this.data = data;
         }

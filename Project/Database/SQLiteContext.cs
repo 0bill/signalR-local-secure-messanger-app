@@ -25,7 +25,7 @@ namespace Database
                 optionsBuilder.EnableSensitiveDataLogging();
                 optionsBuilder.UseLazyLoadingProxies();
                 optionsBuilder.UseSqlite(
-                    @"Data Source=C:\Users\16pxd\Desktop\CORE\Project\Database\Data\SQLiteDB.db");
+                    @"Data Source=C:\Users\16pxd\Desktop\Desktop Appliaction\Desktop Appliaction\Project\Database\Data\SQLiteDB.db");
             }
         }
 

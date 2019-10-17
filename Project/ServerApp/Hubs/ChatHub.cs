@@ -16,7 +16,7 @@ namespace ServerApp.Hubs
         {
             if (Context.GetHttpContext().Request.IsHttps)
                 Console.WriteLine("Got SSL");
-            var x = (IServerRuntimeData)_serviceProvider.GetService(typeof(IServerRuntimeData));
+            var x = (IRuntimeData)_serviceProvider.GetService(typeof(IRuntimeData));
             x.msg();
         }
         public override Task OnConnectedAsync()

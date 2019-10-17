@@ -2,17 +2,17 @@
 {
     public abstract class GenericController<T>
     {
-        private T _view;
+        protected T View;
 
 
         protected GenericController(T view)
         {
-            this._view = view;
+            this.View = view;
         }
 
         public T GetView()
         {
-            return _view;
+            return View;
         }
     }
 }

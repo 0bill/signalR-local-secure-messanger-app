@@ -16,5 +16,9 @@ namespace Domain
         [NotMapped]
         public string Token { get; set; }
 
+        public override string ToString()
+        {
+            return Id + " " + Username + " " + Password + " ";
+        }
     }
 }

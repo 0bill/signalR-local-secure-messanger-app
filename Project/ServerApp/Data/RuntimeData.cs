@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace ServerApp.Data
 {
-    public interface IServerRuntimeData
+    public interface IRuntimeData
     {
         void msg();
     }
-    public class ServerRuntimeData : IServerRuntimeData
+    public class RuntimeData : IRuntimeData
     {
         private int x = 0;
         public void msg()
         {
-            Console.WriteLine("Tutaj jestem" + x);
+            Console.WriteLine("Count" + x);
             x++;
         }
     }
