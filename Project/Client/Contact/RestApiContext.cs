@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,7 +13,9 @@ namespace Client.Contact
     public interface IRestApiContext
     {
         IRestApiContext EstablishConnection();
-        Task<bool> Post(User user);
+
+        Task<User> PostAuthUser(User user);
+         Task<List<User>> PostGetAllUsers(Token token);
     }
 
 
@@ -36,20 +39,38 @@ namespace Client.Contact
             return this;
         }
 
-        public async Task<bool> Post(User user)
+        public async Task<User> PostAuthUser(User user)
         {
+            
+            
             var json = JsonConvert.SerializeObject(user);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             var response = await _client.PostAsync("https://localhost:5001/api/UserAuth", stringContent);
 
 
-            if (response.StatusCode != HttpStatusCode.OK) return false;
-            
+            if (response.StatusCode != HttpStatusCode.OK) return null;
             var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            var user1 = JsonConvert.DeserializeObject<User>(readAsStringAsync);
-            Console.WriteLine(user1.Username);
-            return true;
+            //var user1 = JsonConvert.DeserializeObject<string>(readAsStringAsync);
+            user.Token = readAsStringAsync;
+            Console.WriteLine(readAsStringAsync);
+            return user;
+        }
 
+        public async Task<List<User>> PostGetAllUsers(Token token)
+        {
+            Console.WriteLine("s1");
+            var json = JsonConvert.SerializeObject(token);
+            var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            var response = await _client.PostAsync("https://localhost:5001/api/UserList", stringContent);
+            Console.WriteLine("s2");
+            Console.WriteLine(response.StatusCode + response.ToString());
+            if (response.StatusCode != HttpStatusCode.OK) return null;
+            Console.WriteLine("s3");
+            var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            var user1 = JsonConvert.DeserializeObject<List<User>>(readAsStringAsync);
+            
+            return null;
+   
         }
     }
 }

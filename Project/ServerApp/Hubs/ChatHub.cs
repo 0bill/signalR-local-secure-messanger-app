@@ -18,7 +18,7 @@ namespace ServerApp.Hubs
                 Console.WriteLine("Got SSL");
             //get instance of GLOBAL DATA
             var x = (IServerDataRuntime)_serviceProvider.GetService(typeof(IServerDataRuntime));
-            x.msg();
+     
         }
         public override Task OnConnectedAsync()
         {

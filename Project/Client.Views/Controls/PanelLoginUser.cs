@@ -22,9 +22,16 @@ namespace Client.Views.Controls
             var password = textBoxPassword.Text;
 
             if (username == string.Empty)
+            {
                 ShowError("Please fill username");
+                return;
+            }
             if (password == string.Empty)
+            {
                 ShowError("Please fill password");
+                return;
+            }
+
 
             var eventArgs = new OnUserSubmitEventArgs(username, password);
             OnUserSubmit(sender, eventArgs);
@@ -33,7 +40,7 @@ namespace Client.Views.Controls
 
         public void ShowError(string msg)
         {
-            this.ErrorLabel.Text = "Error: " + msg;
+            this.ErrorLabel.Text = msg;
             this.PanelError.Visible = true;
         }
     }

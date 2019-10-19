@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client.Views
+namespace Client.Forms
 {
     public interface IView
     {

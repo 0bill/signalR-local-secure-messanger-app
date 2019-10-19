@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
+
 using System.Windows.Forms;
+using Client.Forms;
 using Client.Views.Controls;
+
 
 namespace Client.Views
 {
     public interface IHomePanelView : IView
+    
     {
         event EventHandler OnUserClick; 
         event EventHandler UserLoginSubmit;
         void FillPanelWithUsers(List<string> users);
         void UserLoggedOn();
         void ShowLoginError(string msg);
+        void ShowLoginMessage(string msg);
     }
 
     public partial class HomePanelView : Form, IHomePanelView
@@ -42,7 +46,6 @@ namespace Client.Views
             this.SuspendLayout();
             for (var i = 0; i < users.Count(); i++)
             {
-                Console.WriteLine(i);
                 PanelUserItem panelUserItem = new PanelUserItem();
                 panelUserItem.setUser(users[i]);
                 panelUserItem.Name = users[i];
@@ -54,13 +57,21 @@ namespace Client.Views
             this.ResumeLayout(false);
         }
 
+   
+
         public void UserLoggedOn()
         {
+            
             panelLoginUser.Visible = false;
             PanelUsers.Visible = true;
         }
 
         public void ShowLoginError(string msg)
+        {
+            panelLoginUser.ShowError("Error: " + msg);
+        }
+
+        public void ShowLoginMessage(string msg)
         {
             panelLoginUser.ShowError(msg);
         }

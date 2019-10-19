@@ -1,8 +1,9 @@
 ﻿using System.Windows.Forms;
+using Client.Forms;
 
 namespace Client.Views
 {
-    public interface IMessageView
+    public interface IMessageView : IView
     {
         void Activate();
     }

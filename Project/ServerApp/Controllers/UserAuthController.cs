@@ -5,6 +5,7 @@ using Database;
 using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServerApp.Data;
 
 namespace ServerApp.Controllers
 {
@@ -13,10 +14,12 @@ namespace ServerApp.Controllers
     public class UserAuthController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private IServerDataRuntime _dataRuntime;
 
-        public UserAuthController(IUnitOfWork unitOfWork)
+        public UserAuthController(IUnitOfWork unitOfWork, IServerDataRuntime dataRuntime)
         {
             _unitOfWork = unitOfWork;
+            _dataRuntime = dataRuntime;
         }
 
 
@@ -25,11 +28,11 @@ namespace ServerApp.Controllers
         [HttpPost]
         public ActionResult<User> PostUser(User user)
         {
-
             if (_unitOfWork.UserRepository.IsLoginUserValid(user))
             {
-                user.Username = Guid.NewGuid().ToString();
-                return Ok(user);
+                user.Token = Guid.NewGuid().ToString();
+                _dataRuntime.addConnectedUser(user);
+                return Ok(user.Token);
             }
             return BadRequest();
 

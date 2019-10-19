@@ -24,6 +24,7 @@ namespace Client.Controllers
             _container = container;
             Console.WriteLine("Message" + Id);
             EventHelper.GlobalEvent += Write;
+            _container.Resolve<IHomeController>();
         }
 
         private void Write(object sender, EventArgs e)

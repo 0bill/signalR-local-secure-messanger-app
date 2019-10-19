@@ -20,7 +20,8 @@ namespace Database.Repositories
 
         public bool IsLoginUserValid(User userToLogin)
         {
-            var result = SqLiteContext.Users.SingleOrDefault(u => u.Username == userToLogin.Username);
+            var result = SqLiteContext.Users.SingleOrDefault(u => u.Username == userToLogin.Username && u.Password == userToLogin.Password);
+            Console.WriteLine(result.Id);
             return result != null;
             
         }

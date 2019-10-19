@@ -15,11 +15,17 @@ namespace Domain
         [Required] public string Username { get; set; }
 
         private string _password;
-        
+
         public string Password
         {
             get => _password;
-            set => _password = GenerateHash(value,Salt);
+            set => _password = value;
+        }
+
+        [NotMapped]
+        public string NotHashedPassword
+        {
+            set => _password = GenerateHash(value, Salt);
         }
 
         [NotMapped] public string ConnectionId { get; set; }
@@ -34,11 +40,19 @@ namespace Domain
             byte[] hash = sHA256ManagedString.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
         }
-        
+
         public bool IsPasswordCorrect(string plainTextInput)
         {
             string newHashedPin = GenerateHash(plainTextInput, Salt);
-            return newHashedPin.Equals(Password); 
+            return newHashedPin.Equals(Password);
+        }
+
+        public Token getToken()
+        {
+            return new Token()
+            {
+                Key = this.Token
+            };
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Client.Contact;
+using Client.Data;
 using Client.Helpers;
 using Client.Views;
 using Unity;
@@ -19,36 +20,61 @@ namespace Client.Controllers
     class HomeController : GenericController<IHomePanelView>, IHomeController
     {
         private IUnityContainer _container;
-        private bool UserSessionActive { get; set; }
+        private User CurrentUser;
 
         public HomeController(IUnityContainer unityContainer, IHomePanelView view) : base(view)
         {
-            UserSessionActive = false;
-            LoadUsersTest(view);
-            Console.WriteLine("Home" + this.GetHashCode());
-            Console.WriteLine("unityContainer" + unityContainer.GetHashCode());
+            CurrentUser = null;
+            
             _container = unityContainer;
             view.UserLoginSubmit += LoginUser;
-
+            //TODO: napewno trzeba to wyjebac i zrobic po logowaniu
+            LoadUsersTest(view);
             view.OnUserClick += OnUserClick;
         }
 
         private async void LoginUser(object sender, EventArgs e)
         {
             var userSubmit = (OnUserSubmitEventArgs) e;
-            var user = new User
+            var providedUser = new User
             {
                 Username = userSubmit.Username,
-                Password = userSubmit.Password
+                NotHashedPassword = userSubmit.Password
             };
-
-            var post = await _container.Resolve<IRestApiContext>().EstablishConnection().Post(user);    
-            if(post)
-               View.UserLoggedOn(); 
+            View.ShowLoginMessage("Loading...");
+            
+            try
+            {
+                var post = await _container.Resolve<IRestApiContext>().EstablishConnection().PostAuthUser(providedUser);
+                if (post != null)
+                {
+                    CurrentUser = post;
+                    OnSuccessLogin(); 
+                }
+                    
+            }
+            catch(Exception exception)
+            {
+                if (typeof(System.Net.Http.HttpRequestException) == exception.GetType())
+                {
+                    View.ShowLoginError("Cannot connect to the server. Try again later");
+                }
+                return;
+            }
+            
             View.ShowLoginError("Wrong user");
         }
+        
+        
 
-        private static void LoadUsersTest(IHomePanelView view)
+        private async void OnSuccessLogin()
+        {
+            var post = await _container.Resolve<IRestApiContext>().EstablishConnection().PostGetAllUsers(CurrentUser.getToken());
+            
+            View.UserLoggedOn();
+        }
+
+        private void LoadUsersTest(IHomePanelView view)
         {
             var user = new User() {Username = "One"};
             var user2 = new User() {Username = "two"};
@@ -65,8 +91,6 @@ namespace Client.Controllers
         {
             EventHelper.Raise(this, new EventArgs());
             var talkWith = ((Control) sender).Name;
-            Console.WriteLine("***" + sender.ToString());
-            Console.WriteLine(">>" + talkWith);
 
             var checkIsInstanceExit = _container.Resolve<ObjectContainer>().CheckMessageIsInstanceExit(talkWith);
             Console.WriteLine(checkIsInstanceExit);

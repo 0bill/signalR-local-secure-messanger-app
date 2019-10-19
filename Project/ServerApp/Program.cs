@@ -8,21 +8,6 @@ using ServerApp.Data;
 
 namespace ServerApp
 {
-    public class Test
-    {
-        private IServerDataRuntime _dataRuntime;
-
-        public Test(IServerDataRuntime dataRuntime)
-        {
-            this._dataRuntime = dataRuntime;
-        }
-
-
-        public void elos()
-        {
-            _dataRuntime.msg();
-        }
-    }
     public class Program
     {
         public static void Main(string[] args)
