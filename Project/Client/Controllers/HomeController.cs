@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Client.Contact;
 using Client.Helpers;
 using Client.Views;
 using Unity;
@@ -16,10 +18,37 @@ namespace Client.Controllers
 
     class HomeController : GenericController<IHomePanelView>, IHomeController
     {
-        IUnityContainer container;
-        private IHomePanelView _view;
+        private IUnityContainer _container;
+        private bool UserSessionActive { get; set; }
 
         public HomeController(IUnityContainer unityContainer, IHomePanelView view) : base(view)
+        {
+            UserSessionActive = false;
+            LoadUsersTest(view);
+            Console.WriteLine("Home" + this.GetHashCode());
+            Console.WriteLine("unityContainer" + unityContainer.GetHashCode());
+            _container = unityContainer;
+            view.UserLoginSubmit += LoginUser;
+
+            view.OnUserClick += OnUserClick;
+        }
+
+        private async void LoginUser(object sender, EventArgs e)
+        {
+            var userSubmit = (OnUserSubmitEventArgs) e;
+            var user = new User
+            {
+                Username = userSubmit.Username,
+                Password = userSubmit.Password
+            };
+
+            var post = await _container.Resolve<IRestApiContext>().EstablishConnection().Post(user);    
+            if(post)
+               View.UserLoggedOn(); 
+            View.ShowLoginError("Wrong user");
+        }
+
+        private static void LoadUsersTest(IHomePanelView view)
         {
             var user = new User() {Username = "One"};
             var user2 = new User() {Username = "two"};
@@ -29,13 +58,6 @@ namespace Client.Controllers
             users.Add(user2.Username);
             users.Add(user3.Username);
             view.FillPanelWithUsers(users);
-
-            Console.WriteLine("Home" + this.GetHashCode());
-            Console.WriteLine("unityContainer" + unityContainer.GetHashCode());
-            container = unityContainer;
-            _view = view;
-
-            view.OnUserClick += OnUserClick;
         }
 
 
@@ -46,11 +68,11 @@ namespace Client.Controllers
             Console.WriteLine("***" + sender.ToString());
             Console.WriteLine(">>" + talkWith);
 
-            var checkIsInstanceExit = container.Resolve<ObjectContainer>().CheckMessageIsInstanceExit(talkWith);
+            var checkIsInstanceExit = _container.Resolve<ObjectContainer>().CheckMessageIsInstanceExit(talkWith);
             Console.WriteLine(checkIsInstanceExit);
             if (checkIsInstanceExit == null)
             {
-                var messageController = container.Resolve<IMessageController>();
+                var messageController = _container.Resolve<IMessageController>();
                 messageController.TalksWithUser(talkWith);
             }
             else

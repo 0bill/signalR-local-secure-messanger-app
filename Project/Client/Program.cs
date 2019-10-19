@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Client.Contact;
 using Client.Controllers;
 using Client.Data;
 using Client.Helpers;
@@ -31,6 +32,7 @@ namespace Client
                 .RegisterType<IHomeController, HomeController>(new ContainerControlledLifetimeManager())
                 .RegisterType<IHomePanelView, HomePanelView>(new ContainerControlledLifetimeManager())
                 .RegisterType<IMessageController, MessageController>(new TransientLifetimeManager())
+                .RegisterType<IRestApiContext, RestApiContext>(new TransientLifetimeManager())
                 .RegisterType<IMessageView, MessageView>(new TransientLifetimeManager());
 
             unityContainer.RegisterInstance(unityContainer.Resolve<IHomeController>());
