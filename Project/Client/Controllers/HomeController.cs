@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System;
+using System.Windows.Forms;
 using Client.Views;
 using Unity;
 
@@ -7,50 +8,46 @@ namespace Client.Controllers
 {
     public interface IHomeController
     {
-        IHomeView GetMainView();
-
+        IForm GetMainView();
     }
-    class HomeController : GenericController<IHomeView>, IHomeController
-    {
 
-        IHomeView _homeView;
-        // ITestPresenter _testView;
+    class HomeController : GenericController<IForm>, IHomeController
+    {
         IUnityContainer container;
 
-        //, ITestPresenter x
-        public HomeController(IUnityContainer unityContainer, IHomeView view) : base(view)
+
+        
+        public HomeController(IUnityContainer unityContainer, IForm view) : base(view)
         {
             var user = new User();
             Console.WriteLine("Home" + this.GetHashCode());
             Console.WriteLine("unityContainer" + unityContainer.GetHashCode());
             container = unityContainer;
-            _homeView = view;
+          
+            
+            //this.View.button += Test;
+            //this.View.dzwoni += new EventHandler(answer);
+        }
 
-            // _testView = x;
-
-
-            _homeView.dzwoni += new EventHandler(answer);
+        private void Test(object sender, EventArgs e)
+        {
+            container.Resolve<IMessageController>();
+            container.Resolve<IMessageController>();
+            container.Resolve<IMessageController>();
+            container.Resolve<IMessageController>();
 
         }
 
         private void answer(object sender, EventArgs e)
         {
-            //_testView.getSub().show();
-
             runTest();
+        }
 
-        }
-        /// <summary>
-        /// return intatance of view
-        /// </summary>
-        /// <returns></returns>
-        public IHomeView GetMainView()
+        public IForm GetMainView()
         {
-            return _homeView;
+            return this.View;
         }
-        /// <summary>
-        /// Get presenter inst and pick and show view
-        /// </summary>
+
         public void runTest()
         {
             //ITestController tempTestView = container.Resolve<TestController>();
@@ -70,9 +67,6 @@ namespace Client.Controllers
 
 
             //_testView.getSub().show();
-
         }
     }
-
-  
 }

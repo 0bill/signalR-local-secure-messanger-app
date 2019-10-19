@@ -2,11 +2,17 @@
 
 namespace Client.Views
 {
-    public partial class MessageView : Form
+    public interface IMessageView : IView
+    {
+        
+    }
+    public partial class MessageView : Form, IMessageView
     {
         public MessageView()
         {
             InitializeComponent();
         }
+        
+        
     }
 }

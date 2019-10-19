@@ -12,7 +12,7 @@ namespace ServerApp.Controllers
     [ApiController]
     public class UserAuthController : ControllerBase
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UserAuthController(IUnitOfWork unitOfWork)
         {

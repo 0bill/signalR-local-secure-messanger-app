@@ -8,6 +8,7 @@ namespace Client.Views
     public interface IHomeView : IView
     {
         event EventHandler dzwoni;
+        event EventHandler button;
     }
 
     public partial class HomeView : Form, IHomeView
@@ -15,7 +16,7 @@ namespace Client.Views
         public HomeView()
         {
             InitializeComponent();
-            ConnectAsync();
+       
         }
         private async void ConnectAsync()
         {
@@ -39,5 +40,11 @@ namespace Client.Views
 
 
         public event EventHandler dzwoni;
+        public event EventHandler button;
+
+        public void button1_Click(object sender, EventArgs e)
+        {
+            button.Invoke(this,null);
+        }
     }
 }
