@@ -2,9 +2,9 @@
 
 namespace Client.Views
 {
-    public interface IMessageView : IView
+    public interface IMessageView
     {
-        
+        void Activate();
     }
     public partial class MessageView : Form, IMessageView
     {
@@ -12,7 +12,5 @@ namespace Client.Views
         {
             InitializeComponent();
         }
-        
-        
     }
 }

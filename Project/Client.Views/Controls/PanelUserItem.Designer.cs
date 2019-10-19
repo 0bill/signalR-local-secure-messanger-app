@@ -1,15 +1,15 @@
-﻿using System.Windows.Forms;
+﻿using System.ComponentModel;
 
-namespace Client.Views
+namespace Client.Views.Controls
 {
-    partial class HomeView
+    partial class PanelUserItem
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -19,10 +19,11 @@ namespace Client.Views
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -30,35 +31,29 @@ namespace Client.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            
+            this.LabelUserName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // LabelUserName
             // 
-            this.button1.Location = new System.Drawing.Point(336, 196);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 30);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.LabelUserName.Location = new System.Drawing.Point(-3, 19);
+            this.LabelUserName.Name = "LabelUserName";
+            this.LabelUserName.Size = new System.Drawing.Size(300, 15);
+            this.LabelUserName.TabIndex = 0;
+            this.LabelUserName.Text = "LabelUserName";
             // 
-            // HomeView
+            // PanelUserItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(933, 519);
-            this.Controls.Add(this.button1);
-            this.Name = "HomeView";
-            this.Text = "HomeView";
+            this.Controls.Add(this.LabelUserName);
+            this.Name = "PanelUserItem";
+            this.Size = new System.Drawing.Size(300, 50);
             this.ResumeLayout(false);
-            
-           
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label LabelUserName;
     }
 }

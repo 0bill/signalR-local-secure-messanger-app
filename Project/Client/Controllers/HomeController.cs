@@ -1,6 +1,9 @@
 ﻿using Domain;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using Client.Helpers;
 using Client.Views;
 using Unity;
 
@@ -8,44 +11,57 @@ namespace Client.Controllers
 {
     public interface IHomeController
     {
-        IForm GetMainView();
+        IHomePanelView GetStartGetView();
     }
 
-    class HomeController : GenericController<IForm>, IHomeController
+    class HomeController : GenericController<IHomePanelView>, IHomeController
     {
         IUnityContainer container;
+        private IHomePanelView _view;
 
-
-        
-        public HomeController(IUnityContainer unityContainer, IForm view) : base(view)
+        public HomeController(IUnityContainer unityContainer, IHomePanelView view) : base(view)
         {
-            var user = new User();
+            var user = new User() {Username = "One"};
+            var user2 = new User() {Username = "two"};
+            var user3 = new User() {Username = "three"};
+            var users = new List<string>();
+            users.Add(user.Username);
+            users.Add(user2.Username);
+            users.Add(user3.Username);
+            view.FillPanelWithUsers(users);
+
             Console.WriteLine("Home" + this.GetHashCode());
             Console.WriteLine("unityContainer" + unityContainer.GetHashCode());
             container = unityContainer;
-          
-            
-            //this.View.button += Test;
-            //this.View.dzwoni += new EventHandler(answer);
+            _view = view;
+
+            view.OnUserClick += OnUserClick;
         }
 
-        private void Test(object sender, EventArgs e)
-        {
-            container.Resolve<IMessageController>();
-            container.Resolve<IMessageController>();
-            container.Resolve<IMessageController>();
-            container.Resolve<IMessageController>();
 
+        private void OnUserClick(object sender, EventArgs e)
+        {
+            EventHelper.Raise(this, new EventArgs());
+            var talkWith = ((Control) sender).Name;
+            Console.WriteLine("***" + sender.ToString());
+            Console.WriteLine(">>" + talkWith);
+
+            var checkIsInstanceExit = container.Resolve<ObjectContainer>().CheckMessageIsInstanceExit(talkWith);
+            Console.WriteLine(checkIsInstanceExit);
+            if (checkIsInstanceExit == null)
+            {
+                var messageController = container.Resolve<IMessageController>();
+                messageController.TalksWithUser(talkWith);
+            }
+            else
+            {
+                checkIsInstanceExit.Activate();
+            }
         }
 
-        private void answer(object sender, EventArgs e)
+        public IHomePanelView GetStartGetView()
         {
-            runTest();
-        }
-
-        public IForm GetMainView()
-        {
-            return this.View;
+            return View;
         }
 
         public void runTest()
@@ -67,6 +83,10 @@ namespace Client.Controllers
 
 
             //_testView.getSub().show();
+        }
+
+        private protected override void View_Closed(object sender, EventArgs e)
+        {
         }
     }
 }
