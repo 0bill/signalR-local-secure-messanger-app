@@ -8,6 +8,7 @@ using Client.Contact;
 using Client.Data;
 using Client.Helpers;
 using Client.Views;
+using Client.Views.Events;
 using Unity;
 
 namespace Client.Controllers
@@ -15,6 +16,7 @@ namespace Client.Controllers
     public interface IHomeController
     {
         IHomePanelView GetStartGetView();
+        void LogoutUser();
     }
 
     class HomeController : GenericController<IHomePanelView>, IHomeController
@@ -28,9 +30,7 @@ namespace Client.Controllers
             
             _container = unityContainer;
             view.UserLoginSubmit += LoginUser;
-            //TODO: napewno trzeba to wyjebac i zrobic po logowaniu
-            LoadUsersTest(view);
-            view.OnUserClick += OnUserClick;
+            
         }
 
         private async void LoginUser(object sender, EventArgs e)
@@ -70,20 +70,34 @@ namespace Client.Controllers
         private async void OnSuccessLogin()
         {
             var post = await _container.Resolve<IRestApiContext>().EstablishConnection().PostGetAllUsers(CurrentUser.getToken());
-            
+            post.Remove(post.SingleOrDefault(x=>x.Id==CurrentUser.Id));
             View.UserLoggedOn();
+            View.OnUserClick += OnUserClick;
+            View.LogoutUser += LogoutUser;
+            LoadUsersTopPanel(post);
         }
 
-        private void LoadUsersTest(IHomePanelView view)
+        public void LogoutUser()
         {
-            var user = new User() {Username = "One"};
-            var user2 = new User() {Username = "two"};
-            var user3 = new User() {Username = "three"};
-            var users = new List<string>();
-            users.Add(user.Username);
-            users.Add(user2.Username);
-            users.Add(user3.Username);
-            view.FillPanelWithUsers(users);
+            CurrentUser = null;
+            View.UserLoggedOFF();
+            View.OnUserClick -= OnUserClick;
+            View.LogoutUser -= LogoutUser;
+            EventHelper.RaiseGlobalUserLoggedOff(this,EventArgs.Empty);
+            _container.Resolve<ObjectContainer>().Clear();
+
+
+        }
+        private void LogoutUser(object sender, EventArgs e)
+        {
+            LogoutUser();
+        }
+
+        
+
+        private void LoadUsersTopPanel(List<User> users)
+        {
+            View.FillPanelWithUsers(users);
         }
 
 
@@ -109,6 +123,8 @@ namespace Client.Controllers
         {
             return View;
         }
+
+        
 
         public void runTest()
         {

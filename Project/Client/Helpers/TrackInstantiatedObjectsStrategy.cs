@@ -30,6 +30,11 @@ namespace Client.Helpers
             _instantiatedObjects.Remove(toRemove);
         }
 
+        public void Clear()
+        {
+            _instantiatedObjects.Clear();
+        }
+
         public MessageController CheckMessageIsInstanceExit(string user)
         {
             //var list = GetInstantiatedObjects<MessageController>();

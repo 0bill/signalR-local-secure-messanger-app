@@ -28,7 +28,7 @@ namespace ServerApp.Controllers
             
             if (iscorrect)
             {
-                var users = _unitOfWork.UserRepository.GetAll().ToList();
+                var users = _unitOfWork.UserRepository.GetAll().OrderByDescending(x=>x.Id).ToList();
                 
                 return Ok(users);
             }

@@ -7,7 +7,7 @@ namespace Database.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        bool IsLoginUserValid(User userToLogin);
+        User IsLoginUserValid(User userToLogin);
     }
 
     public class UserRepository : Repository<User>, IUserRepository
@@ -18,11 +18,11 @@ namespace Database.Repositories
         {
         }
 
-        public bool IsLoginUserValid(User userToLogin)
+        public User IsLoginUserValid(User userToLogin)
         {
             var result = SqLiteContext.Users.SingleOrDefault(u => u.Username == userToLogin.Username && u.Password == userToLogin.Password);
-            Console.WriteLine(result.Id);
-            return result != null;
+            
+            return result;
             
         }
     }

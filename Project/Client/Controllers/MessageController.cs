@@ -25,6 +25,12 @@ namespace Client.Controllers
             Console.WriteLine("Message" + Id);
             EventHelper.GlobalEvent += Write;
             _container.Resolve<IHomeController>();
+            EventHelper.GlobalUserLoggedOff += Close;
+        }
+
+        private void Close(object sender, EventArgs e)
+        {
+            View.CloseView();
         }
 
         private void Write(object sender, EventArgs e)

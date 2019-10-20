@@ -28,11 +28,14 @@ namespace ServerApp.Controllers
         [HttpPost]
         public ActionResult<User> PostUser(User user)
         {
-            if (_unitOfWork.UserRepository.IsLoginUserValid(user))
+            var confirmedUser = _unitOfWork.UserRepository.IsLoginUserValid(user);
+            if (confirmedUser!=null)
             {
-                user.Token = Guid.NewGuid().ToString();
-                _dataRuntime.addConnectedUser(user);
-                return Ok(user.Token);
+                
+                confirmedUser.Token = Guid.NewGuid().ToString();
+                confirmedUser.Password = null;
+                _dataRuntime.addConnectedUser(confirmedUser);
+                return Ok(confirmedUser);
             }
             return BadRequest();
 
