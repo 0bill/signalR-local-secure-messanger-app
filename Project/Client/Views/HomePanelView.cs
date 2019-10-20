@@ -96,7 +96,6 @@ namespace Client.Views
             if (sender.GetType() == typeof(PanelUserItem))
             {
                 var panelUserItem = (PanelUserItem) sender;
-                Console.WriteLine("Hello" + panelUserItem.Name);
                 OnUserClick(sender, e);
             }
         }

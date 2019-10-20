@@ -31,23 +31,15 @@ namespace Database.Test
             using var unitOfWork = new UnitOfWork(sqLiteContext);
             sqLiteContext.Users.Add(user);
             sqLiteContext.SaveChanges();
-            var isLoginUserValid = unitOfWork.UserRepository.IsLoginUserValid(user);
+            var result = unitOfWork.UserRepository.IsLoginUserValid(user);
+            user.NotHashedPassword = "BAD";
+            var result2 = unitOfWork.UserRepository.IsLoginUserValid(user);
 
-          //  Assert.True(isLoginUserValid);
+            Assert.True(result!=null);
+            Assert.False(result2!=null);
         }
 
-        [Fact]
-        public void TestUserPassword()
-        {
-            string password = "test";
-            var user = new User()
-            {
-                Username = "Test",
-                Password = password
-            };
-            Output.WriteLine(user.Password);
-            Assert.NotSame(password, user.Password);
-        }
+    
 
      
     }

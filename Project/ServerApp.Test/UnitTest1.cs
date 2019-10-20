@@ -24,8 +24,9 @@ namespace ServerApp.Test
             Assert.True(good);
             Assert.False(bad);
         }
+        
         [Fact]
-        public void TestOveriteLoginUsers()
+        public void TestOverrideLoginUsers()
         {
             var serverDataRuntime = new ServerDataRuntime();
             var user = new User {Id = 1, Username = "admin", Token = "Token"};

@@ -10,6 +10,7 @@ namespace Client.Controllers
     public interface IMessageController
     {
         string TalksWithUser();
+        void LoadMessages();
         void Activate();
         void TalksWithUser(string talkWith);
     }
@@ -21,37 +22,53 @@ namespace Client.Controllers
 
         public MessageController(IUnityContainer container, IMessageView view) : base(view)
         {
-            _container = container;
+            
             Console.WriteLine("Message" + Id);
-            EventHelper.GlobalEvent += Write;
+            
+            _container = container;
             _container.Resolve<IHomeController>();
+            
+            EventHelper.GlobalEvent += Write;
             EventHelper.GlobalUserLoggedOff += Close;
         }
 
         private void Close(object sender, EventArgs e)
         {
             View.CloseView();
+            Dispose();
         }
 
         private void Write(object sender, EventArgs e)
         {
-            Console.WriteLine("ECHO");
         }
 
         ~MessageController() => Console.WriteLine("Destroyed" + Id);
 
         private protected override void View_Closed(object sender, EventArgs e)
         {
-            _container.Resolve<ObjectContainer>().DisposeObject(this);
-            _container.Resolve<ObjectContainer>().DisposeObject(sender);
-            EventHelper.GlobalEvent -= Write;
-            GC.Collect();
+            Dispose();
         }
-        
+
+        public override void Dispose()
+        {
+            Console.WriteLine(this.GetHashCode());
+            _container.Resolve<ObjectContainer>().DisposeObject(View);
+            _container.Resolve<ObjectContainer>().DisposeObject(this);
+            EventHelper.GlobalEvent -= Write;
+            EventHelper.GlobalUserLoggedOff -= Close;
+            GC.Collect();
+            base.Dispose();
+        }
+       
+
         public string TalksWithUser()
         {
-            Console.WriteLine(_TalksWithUser);
             return _TalksWithUser;
+        }
+
+        public void LoadMessages()
+        {
+            throw new NotImplementedException();
         }
 
         public void Activate()

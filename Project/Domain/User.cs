@@ -41,13 +41,13 @@ namespace Domain
             return Convert.ToBase64String(hash);
         }
 
-        public bool IsPasswordCorrect(string plainTextInput)
+       /* public bool IsPasswordCorrect(string plainTextInput)
         {
             string newHashedPin = GenerateHash(plainTextInput, Salt);
             return newHashedPin.Equals(Password);
-        }
+        }*/
 
-        public Token getToken()
+        public Token GetToken()
         {
             return new Token()
             {

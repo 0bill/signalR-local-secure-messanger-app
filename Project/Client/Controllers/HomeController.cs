@@ -27,7 +27,6 @@ namespace Client.Controllers
         public HomeController(IUnityContainer unityContainer, IHomePanelView view) : base(view)
         {
             CurrentUser = null;
-            
             _container = unityContainer;
             view.UserLoginSubmit += LoginUser;
             
@@ -69,7 +68,7 @@ namespace Client.Controllers
 
         private async void OnSuccessLogin()
         {
-            var post = await _container.Resolve<IRestApiContext>().EstablishConnection().PostGetAllUsers(CurrentUser.getToken());
+            var post = await _container.Resolve<IRestApiContext>().EstablishConnection().PostGetAllUsers(CurrentUser.GetToken());
             post.Remove(post.SingleOrDefault(x=>x.Id==CurrentUser.Id));
             View.UserLoggedOn();
             View.OnUserClick += OnUserClick;
@@ -104,14 +103,13 @@ namespace Client.Controllers
         private void OnUserClick(object sender, EventArgs e)
         {
             EventHelper.Raise(this, new EventArgs());
-            var talkWith = ((Control) sender).Name;
+            var talkWithUser = ((Control) sender).Name;
 
-            var checkIsInstanceExit = _container.Resolve<ObjectContainer>().CheckMessageIsInstanceExit(talkWith);
-            Console.WriteLine(checkIsInstanceExit);
+            var checkIsInstanceExit = _container.Resolve<ObjectContainer>().CheckMessageIsInstanceExit(talkWithUser);
+
             if (checkIsInstanceExit == null)
             {
-                var messageController = _container.Resolve<IMessageController>();
-                messageController.TalksWithUser(talkWith);
+                CreateMessageWindow(talkWithUser);
             }
             else
             {
@@ -119,12 +117,21 @@ namespace Client.Controllers
             }
         }
 
+        private void CreateMessageWindow(string talkWithUser)
+        {
+            var messageController = _container.Resolve<IMessageController>();
+            messageController.TalksWithUser(talkWithUser);
+        }
+
         public IHomePanelView GetStartGetView()
         {
             return View;
         }
 
-        
+        public override void Dispose()
+        {
+            
+        }
 
         public void runTest()
         {
