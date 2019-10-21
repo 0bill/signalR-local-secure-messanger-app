@@ -28,22 +28,12 @@ namespace ServerApp.Controllers
             
             if (iscorrect)
             {
-                if (_unitOfWork.UsersRepository == null)
-                {
-                    throw new Exception("UsersRepository NULL");
-                }
-
-             
                     var users = _unitOfWork.UsersRepository.GetListUsersDescending();
-                    
-                
                     return Ok(users);
             
-                throw new Exception("nullRepo");
             }
 
-
-            return StatusCode(700);
+            return BadRequest();
         }
         
     }

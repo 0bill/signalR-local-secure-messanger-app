@@ -44,7 +44,7 @@ namespace Client.Contact
             
             
             var json = JsonConvert.SerializeObject(user);
-            var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("https://localhost:5001/api/UserAuth", stringContent);
            
             if (response.StatusCode != HttpStatusCode.OK) return null;
@@ -58,6 +58,19 @@ namespace Client.Contact
         public async Task<List<User>> PostGetAllUsers(Token token)
         {
             var json = JsonConvert.SerializeObject(token);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("https://localhost:5001/api/UserList", stringContent);
+            Console.WriteLine(response.StatusCode);
+            if (response.StatusCode != HttpStatusCode.OK) return null;
+            var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<User>>(readAsStringAsync);
+            return users;
+   
+        }
+        
+        public async Task<List<User>> PostGetAllMessagesForConversation(Token token)
+        {
+            var json = JsonConvert.SerializeObject(token);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             var response = await _client.PostAsync("https://localhost:5001/api/UserList", stringContent);
             Console.WriteLine(response.StatusCode);
@@ -67,5 +80,6 @@ namespace Client.Contact
             return users;
    
         }
+        
     }
 }

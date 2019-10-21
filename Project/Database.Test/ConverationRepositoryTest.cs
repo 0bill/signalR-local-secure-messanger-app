@@ -25,7 +25,7 @@ namespace Database.Test
             var sqLiteContext = new SQLiteContext();
             using var unitOfWork = new UnitOfWork(sqLiteContext);
 
-            var conversation = unitOfWork.ConversationRepository.getConversationMessages(1);
+            var conversation = unitOfWork.MessageRepository.GetConversationMessages(1);
 
             foreach (var message in conversation)
             {

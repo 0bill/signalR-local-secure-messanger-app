@@ -24,8 +24,21 @@ namespace ServerApp.Controllers
         [HttpPost]
         public ActionResult<List<Message>> PostConversationMessage(Conversation conversation)
         {
-            //TODO: wzrocic liste wiadomosci
-            return Ok();
+            //var iscorrect = _dataRuntime.CheckToken(token.Key);
+
+            if (true)
+            {
+
+                if (conversation != null)
+                {
+                    List<Message> conversationMessages =
+                        _unitOfWork.MessageRepository.GetConversationMessages(conversation.Id);
+
+                    return Ok(conversationMessages);
+                }
+            }
+
+            return BadRequest();
         }
     }
 }
