@@ -60,6 +60,7 @@ namespace Client.Contact
             var json = JsonConvert.SerializeObject(token);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             var response = await _client.PostAsync("https://localhost:5001/api/UserList", stringContent);
+            Console.WriteLine(response.StatusCode);
             if (response.StatusCode != HttpStatusCode.OK) return null;
             var readAsStringAsync = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<List<User>>(readAsStringAsync);

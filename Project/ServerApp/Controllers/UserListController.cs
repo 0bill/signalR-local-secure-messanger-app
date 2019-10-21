@@ -24,17 +24,26 @@ namespace ServerApp.Controllers
         [HttpPost]
         public ActionResult<List<User>> PostUserList(Token token)
         {
-            var iscorrect = _dataRuntime.checkToken(token.Key);
+            var iscorrect = _dataRuntime.CheckToken(token.Key);
             
             if (iscorrect)
             {
-                var users = _unitOfWork.UserRepository.GetAll().OrderByDescending(x=>x.Id).ToList();
+                if (_unitOfWork.UsersRepository == null)
+                {
+                    throw new Exception("UsersRepository NULL");
+                }
+
+             
+                    var users = _unitOfWork.UsersRepository.GetListUsersDescending();
+                    
                 
-                return Ok(users);
+                    return Ok(users);
+            
+                throw new Exception("nullRepo");
             }
 
-            return Unauthorized();
-            return BadRequest("Token invalid");
+
+            return StatusCode(700);
         }
         
     }

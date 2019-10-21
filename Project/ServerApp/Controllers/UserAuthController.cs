@@ -10,7 +10,7 @@ using ServerApp.Data;
 namespace ServerApp.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+                       [ApiController]
     public class UserAuthController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -28,13 +28,13 @@ namespace ServerApp.Controllers
         [HttpPost]
         public ActionResult<User> PostUser(User user)
         {
-            var confirmedUser = _unitOfWork.UserRepository.IsLoginUserValid(user);
+            var confirmedUser = _unitOfWork.LoginUserRepository.IsLoginUserValid(user);
             if (confirmedUser!=null)
             {
                 
                 confirmedUser.Token = Guid.NewGuid().ToString();
                 confirmedUser.Password = null;
-                _dataRuntime.addConnectedUser(confirmedUser);
+                _dataRuntime.AddConnectedUser(confirmedUser);
                 return Ok(confirmedUser);
             }
             return BadRequest();

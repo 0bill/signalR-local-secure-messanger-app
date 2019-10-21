@@ -8,34 +8,34 @@ namespace ServerApp.Data
 {
     public interface IServerDataRuntime
     {
-        void addConnectedUser(User user);
-        void removeConnectedUser(User user);
-        bool checkToken(string token);
+        void AddConnectedUser(User user);
+        void RemoveConnectedUser(User user);
+        bool CheckToken(string token);
     }
 
     public class ServerDataRuntime : IServerDataRuntime
     {
-        static List<User> connectedUsers = new List<User>();
+        private static List<User> _connectedUsers = new List<User>();
 
-        public void addConnectedUser(User user)
+        public void AddConnectedUser(User user)
         {
-            foreach (var n in connectedUsers.Where(u => u.Id == user.Id).ToArray()) connectedUsers.Remove(n);
-            connectedUsers.Add(user);
+            foreach (var n in _connectedUsers.Where(u => u.Id == user.Id).ToArray()) _connectedUsers.Remove(n);
+            _connectedUsers.Add(user);
         }
 
-        public void removeConnectedUser(User user)
+        public void RemoveConnectedUser(User user)
         {
-            connectedUsers.Remove(user);
+            _connectedUsers.Remove(user);
         }
 
         public List<User> getConnected()
         {
-            return connectedUsers;
+            return _connectedUsers;
         }
 
-        public bool checkToken(string token)
+        public bool CheckToken(string token)
         {
-            var singleOrDefault = connectedUsers.SingleOrDefault(x => x.Token == token);
+            var singleOrDefault = _connectedUsers.SingleOrDefault(x => x.Token == token);
             if (singleOrDefault != null)
             {
                 return true;

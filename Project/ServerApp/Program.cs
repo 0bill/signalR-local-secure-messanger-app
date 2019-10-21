@@ -1,4 +1,5 @@
 using System.IO;
+using Domain.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,6 @@ namespace ServerApp
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-
 
         }
 

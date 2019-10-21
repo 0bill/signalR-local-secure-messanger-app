@@ -69,7 +69,7 @@ namespace Client.Controllers
         private async void OnSuccessLogin()
         {
             var post = await _container.Resolve<IRestApiContext>().EstablishConnection().PostGetAllUsers(CurrentUser.GetToken());
-            post.Remove(post.SingleOrDefault(x=>x.Id==CurrentUser.Id));
+            post?.Remove(post.SingleOrDefault(x=>x.Id==CurrentUser.Id));
             View.UserLoggedOn();
             View.OnUserClick += OnUserClick;
             View.LogoutUser += LogoutUser;
@@ -102,7 +102,7 @@ namespace Client.Controllers
 
         private void OnUserClick(object sender, EventArgs e)
         {
-            EventHelper.Raise(this, new EventArgs());
+            
             var talkWithUser = ((Control) sender).Name;
 
             var checkIsInstanceExit = _container.Resolve<ObjectContainer>().CheckMessageIsInstanceExit(talkWithUser);

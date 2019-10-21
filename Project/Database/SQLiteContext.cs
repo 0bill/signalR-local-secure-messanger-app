@@ -7,8 +7,10 @@ namespace Database
     {
 
         public DbSet<User> Users { get; set; }
-       // public DbSet<Conversation> Conversations { get; set; }
-       // public DbSet<Message> Messages { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+
+        public DbSet<ConversationUser> ConversationUsers { get; set; }
 
         public SQLiteContext() : base()
         { }
@@ -29,6 +31,26 @@ namespace Database
             }
         }
 
-    
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Conversation>()
+                .HasMany(m=>m.Messages)
+                .WithOne(m=>m.Conversation)
+                .HasForeignKey(m=>m.ConversationId);
+
+           modelBuilder.Entity<Conversation>()
+                .HasMany(m => m.ConversationUsers)
+                .WithOne(m => m.Conversation)
+                .HasForeignKey(m => m.ConversationId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(m => m.ConversationUsers)
+                .WithOne(m => m.User)
+                .HasForeignKey(m => m.UserId);
+
+
+
+        }
     }
+
 }

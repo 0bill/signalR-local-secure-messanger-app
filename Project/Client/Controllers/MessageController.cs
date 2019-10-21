@@ -6,7 +6,6 @@ using Unity;
 
 namespace Client.Controllers
 {
-
     public interface IMessageController
     {
         string TalksWithUser();
@@ -14,6 +13,7 @@ namespace Client.Controllers
         void Activate();
         void TalksWithUser(string talkWith);
     }
+
     public class MessageController : GenericController<IMessageView>, IMessageController
     {
         private int Id => this.GetHashCode();
@@ -22,13 +22,12 @@ namespace Client.Controllers
 
         public MessageController(IUnityContainer container, IMessageView view) : base(view)
         {
-            
             Console.WriteLine("Message" + Id);
-            
+
             _container = container;
             _container.Resolve<IHomeController>();
-            
-            EventHelper.GlobalEvent += Write;
+
+
             EventHelper.GlobalUserLoggedOff += Close;
         }
 
@@ -54,12 +53,12 @@ namespace Client.Controllers
             Console.WriteLine(this.GetHashCode());
             _container.Resolve<ObjectContainer>().DisposeObject(View);
             _container.Resolve<ObjectContainer>().DisposeObject(this);
-            EventHelper.GlobalEvent -= Write;
+
             EventHelper.GlobalUserLoggedOff -= Close;
             GC.Collect();
             base.Dispose();
         }
-       
+
 
         public string TalksWithUser()
         {

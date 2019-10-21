@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
@@ -15,6 +16,8 @@ namespace Domain
         [Required] public string Username { get; set; }
 
         private string _password;
+
+        public virtual List<ConversationUser> ConversationUsers { get; set; }
 
         public string Password
         {

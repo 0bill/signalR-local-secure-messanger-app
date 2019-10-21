@@ -18,9 +18,9 @@ namespace ServerApp.Test
         {
             var serverDataRuntime = new ServerDataRuntime();
             var user = new User {Id = 1, Username = "admin", Token = "Token"};
-            serverDataRuntime.addConnectedUser(user);
-            var good = serverDataRuntime.checkToken(user.Token);
-            var bad = serverDataRuntime.checkToken("BAD");
+            serverDataRuntime.AddConnectedUser(user);
+            var good = serverDataRuntime.CheckToken(user.Token);
+            var bad = serverDataRuntime.CheckToken("BAD");
             Assert.True(good);
             Assert.False(bad);
         }
@@ -31,8 +31,8 @@ namespace ServerApp.Test
             var serverDataRuntime = new ServerDataRuntime();
             var user = new User {Id = 1, Username = "admin", Token = "Token"};
             var user2 = new User {Id = 1, Username = "admin", Token = "Token"};
-            serverDataRuntime.addConnectedUser(user);
-            serverDataRuntime.addConnectedUser(user2);
+            serverDataRuntime.AddConnectedUser(user);
+            serverDataRuntime.AddConnectedUser(user2);
             var count = serverDataRuntime.getConnected().Count;
             Assert.Equal(1,count);
         }

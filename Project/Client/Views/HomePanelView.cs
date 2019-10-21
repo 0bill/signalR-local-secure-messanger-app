@@ -46,7 +46,8 @@ namespace Client.Views
 
         public void FillPanelWithUsers(List<User> users)
         {
-            
+            if(users==null)
+                return;
             this.SuspendLayout();
             for (var i = 0; i < users.Count(); i++)
             {

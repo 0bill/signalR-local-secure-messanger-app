@@ -7,6 +7,7 @@ namespace Client.Views
     {
         void Activate();
         void CloseView();
+        void LoadMessages();
     }
     public partial class MessageView : Form, IMessageView
     {
@@ -14,10 +15,15 @@ namespace Client.Views
         {
             InitializeComponent();
         }
-
+        
         public void CloseView()
         {
            this.Dispose();
+        }
+
+        public void LoadMessages()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

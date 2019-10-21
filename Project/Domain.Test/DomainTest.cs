@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Domain.Test
@@ -51,6 +52,16 @@ namespace Domain.Test
             
             Assert.Same(typeof(Token),user.GetToken().GetType());
             Assert.Same("Token",user.GetToken().Key);
+            
+        }
+
+        [Fact]
+        public void TestMessageTextEncryption()
+        {
+            var textToEnccrypt = "Text to enccrypt";
+            var message = new Message {Text = textToEnccrypt};
+            Assert.NotEqual(textToEnccrypt, message.Text);
+            Assert.Equal(textToEnccrypt, message.EncryptedText);
             
         }
     }
