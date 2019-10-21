@@ -1,18 +1,40 @@
-﻿namespace Client.Controllers
+﻿using System;
+using System.Windows.Forms;
+
+namespace Client.Controllers
 {
-    public abstract class GenericController<T>
+    public abstract class GenericController<T> 
     {
-        private T _view;
+        protected T View;
 
 
         protected GenericController(T view)
         {
-            this._view = view;
+            this.View = view;
+            LoadView();
         }
 
         public T GetView()
         {
-            return _view;
+            return View;
+        }
+        
+        private void LoadView()
+        {
+            var view = this.View as Form;
+            if (View == null) return;
+            view.Show();
+            view.Closed += View_Closed;
+        }
+
+        private protected abstract void View_Closed(object sender, EventArgs e);
+
+
+        public virtual void Dispose()
+        {
+            var view = this.View as Form;
+            if (View == null) return;
+            view.Closed -= View_Closed;
         }
     }
 }
