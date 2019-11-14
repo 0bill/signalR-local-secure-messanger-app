@@ -50,6 +50,26 @@ namespace Database.Test
                 Output.WriteLine(user.Username);
             }
         }
+        
+        [SkippableFact]
+        public void AddUser()
+        {
+            var sqLiteContext = new SQLiteContext();
+            IUnitOfWork unitOfWork = new UnitOfWork(sqLiteContext);
+            var user = new User();
+            user.Username = "admin2";
+            user.Password = "HrWcGBjH1nGiwFcYdj1Qjfrh/qi3KSOPmsuCbLylFbk=";
+            
+            var user2 = new User();
+            user2.Username = "test3";
+            user2.Password = "HrWcGBjH1nGiwFcYdj1Qjfrh/qi3KSOPmsuCbLylFbk=";
+            sqLiteContext.Users.Add(user);
+            sqLiteContext.Users.Add(user2);
+            sqLiteContext.SaveChanges();
+
+        }
+        
+        
 
     
 

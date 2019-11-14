@@ -36,7 +36,8 @@ namespace Domain.Helpers
 
             return result;
         }
-        public byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
+
+        private byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
         {
             byte[] encryptedBytes = null;
 
@@ -68,8 +69,8 @@ namespace Domain.Helpers
 
             return encryptedBytes;
         }
-        
-        public byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes)
+
+        private byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes)
         {
             byte[] decryptedBytes = null;
 

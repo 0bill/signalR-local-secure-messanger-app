@@ -7,7 +7,7 @@ namespace Database
     {
         ILoginUserRepository LoginUserRepository { get; }
         IUsersRepository UsersRepository { get; }
-        MessageRepository MessageRepository { get; }
+        IMessageRepository MessageRepository { get; }
         
         IConversationRepository ConversationRepository { get; }
         int Save();
@@ -18,7 +18,8 @@ namespace Database
         private SQLiteContext _context;
         public ILoginUserRepository LoginUserRepository { get; }
         public IUsersRepository UsersRepository { get; }
-        public MessageRepository MessageRepository { get; }
+        public IMessageRepository MessageRepository { get; }
+
         public IConversationRepository ConversationRepository { get; }
 
         public UnitOfWork()

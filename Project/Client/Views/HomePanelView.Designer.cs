@@ -60,7 +60,7 @@ namespace Client.Views
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
@@ -68,9 +68,9 @@ namespace Client.Views
             // 
             this.PanelUsers.AutoScroll = true;
             this.PanelUsers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelUsers.Location = new System.Drawing.Point(0, 24);
+            this.PanelUsers.Location = new System.Drawing.Point(0, 0);
             this.PanelUsers.Name = "PanelUsers";
-            this.PanelUsers.Size = new System.Drawing.Size(350, 776);
+            this.PanelUsers.Size = new System.Drawing.Size(350, 800);
             this.PanelUsers.TabIndex = 1;
             // 
             // HomePanelView
@@ -83,7 +83,7 @@ namespace Client.Views
             this.MainMenuStrip = this.TopMenu;
             this.Name = "HomePanelView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "HomePanelView";
+            this.Text = "Messanger";
             this.TopMenu.ResumeLayout(false);
             this.TopMenu.PerformLayout();
             this.ResumeLayout(false);

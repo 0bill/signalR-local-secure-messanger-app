@@ -32,7 +32,7 @@ namespace Domain
         }
 
         [NotMapped] public string ConnectionId { get; set; }
-        [NotMapped] public string Token { get; set; }
+        [NotMapped] public Token Token { get; set; }
         [NotMapped] private const string Salt = "Very hard salt";
 
 
@@ -44,18 +44,10 @@ namespace Domain
             return Convert.ToBase64String(hash);
         }
 
-       /* public bool IsPasswordCorrect(string plainTextInput)
-        {
-            string newHashedPin = GenerateHash(plainTextInput, Salt);
-            return newHashedPin.Equals(Password);
-        }*/
-
-        public Token GetToken()
-        {
-            return new Token()
-            {
-                Key = this.Token
-            };
-        }
+        /* public bool IsPasswordCorrect(string plainTextInput)
+         {
+             string newHashedPin = GenerateHash(plainTextInput, Salt);
+             return newHashedPin.Equals(Password);
+         }*/
     }
 }

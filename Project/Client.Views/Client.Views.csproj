@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Client.Views, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>bin\Debug\Client.Views.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MessageItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MessageItem.Designer.cs">
+      <DependentUpon>MessageItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PanelLoginUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -80,6 +89,9 @@
     <Compile Include="Test.Designer.cs">
       <DependentUpon>Test.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\MessageItem.resx">
+      <DependentUpon>MessageItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PanelLoginUser.resx">
       <DependentUpon>PanelLoginUser.cs</DependentUpon>
     </EmbeddedResource>
