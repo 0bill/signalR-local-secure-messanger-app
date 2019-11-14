@@ -1,47 +1,117 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Database;
+using Domain;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using ServerApp.Data;
 
 namespace ServerApp.Hubs
 {
+    [Authorize]
     public class ChatHub : Hub
     {
         private readonly IServiceProvider _serviceProvider;
-        public ChatHub(IServiceProvider serviceProvider)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IServerDataRuntime _dataRuntime;
+
+        public ChatHub(IUnitOfWork unitOfWork, IServerDataRuntime serverData)
         {
-            _serviceProvider = serviceProvider;
+            // _serviceProvider = serviceProvider;
+            _dataRuntime = serverData;
+            _unitOfWork = unitOfWork;
         }
-        public void IsSSL()
-        {
-            if (Context.GetHttpContext().Request.IsHttps)
-                Console.WriteLine("Got SSL");
-            //get instance of GLOBAL DATA
-            var x = (IServerDataRuntime)_serviceProvider.GetService(typeof(IServerDataRuntime));
-     
-        }
+
         public override Task OnConnectedAsync()
         {
+            Clients.All.SendAsync("IncomingMessage", "Dispose");
+
+            //if (!Context.GetHttpContext().Request.IsHttps) Context.Abort();
+
             Console.WriteLine("Connected " + Context.ConnectionId);
+
+
+            var identity = Context.GetHttpContext().User.Identity as ClaimsIdentity;
+            IEnumerable<Claim> claim = identity.Claims;
+            var userClaimId = claim.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var userClaimName = claim.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value;
+            int userId = Convert.ToInt32(userClaimId);
+            var existingUsers = _dataRuntime.ConntectedUsers.Where(x => x.Id == userId);
+
+            foreach (var existingUser in existingUsers)
+            {
+                Clients.Client(existingUser.ConnectionId).SendAsync("Abort",1);
+            }
             
-            var token = Context.GetHttpContext().Request.Headers["token"].ToString();
-            Console.WriteLine("HEADER " + token);
-            //TODO: if token wrong then Context.Abort();
-            //Console.WriteLine(Context.ConnectionAborted);
+            _dataRuntime.ConntectedUsers.Add(new User()
+            {
+                Id = userId,
+                Username = userClaimName,
+                ConnectionId = Context.ConnectionId
+            });
 
-            IsSSL();
+
             return base.OnConnectedAsync();
-           
         }
-
-        
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            Console.WriteLine("Disconnected " + Context.ConnectionId);
+            Clients.All.SendAsync("IncomingMessage", "Dispose");
 
+            Console.WriteLine("Disconnected " + Context.ConnectionId);
+            var disconnectedUser =
+                _dataRuntime.ConntectedUsers.SingleOrDefault(x => x.ConnectionId == Context.ConnectionId);
+            if (disconnectedUser != null)
+                _dataRuntime.ConntectedUsers.Remove(disconnectedUser);
             return base.OnDisconnectedAsync(exception);
         }
-    }
 
+        public void Send(Message newMessage)
+        {
+            var singleOrDefault = _dataRuntime.ConntectedUsers.SingleOrDefault(x => x.ConnectionId == Context.ConnectionId);
+            if(singleOrDefault==null) Context.Abort();
+            //save new message into database
+            var addNewMessage = _unitOfWork.MessageRepository.AddNewMessage(newMessage);
+    
+            //find connected users
+            List<int> conversationUsers = _unitOfWork.ConversationRepository.GetConversationUsers(newMessage.ConversationId);
+            //send to them new message
+            foreach (var conversationUser in conversationUsers)
+            {
+                var user = _dataRuntime.ConntectedUsers.SingleOrDefault(x=>x.Id == conversationUser);
+                if(user!=null)
+                Clients.Client(user.ConnectionId).SendAsync("IncomingMessage", newMessage);
+            }
+
+            
+        }
+
+        public void ReceivedMessage(Message message)
+        {
+            var singleOrDefault = _dataRuntime.ConntectedUsers.SingleOrDefault(x => x.ConnectionId == Context.ConnectionId);
+            if(singleOrDefault==null) Context.Abort();
+            
+            var identity = Context.GetHttpContext().User.Identity as ClaimsIdentity;
+            IEnumerable<Claim> claim = identity.Claims;
+            var userClaim = claim.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            int userId = Convert.ToInt32(userClaim);
+
+            List<Message> conversationMessages = new List<Message> {message};
+            _unitOfWork.MessageRepository.MarkMessagesAsReceived(userId, conversationMessages);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+    }
 }

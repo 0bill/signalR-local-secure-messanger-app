@@ -8,40 +8,62 @@ namespace ServerApp.Data
 {
     public interface IServerDataRuntime
     {
-        void AddConnectedUser(User user);
-        void RemoveConnectedUser(User user);
-        bool CheckToken(string token);
+        bool CheckToken(Token token);
+        void AddToken(Token token);
+        bool CheckRefreshToken(Token token);
+        void RemoveToken(Token token);
+        List<Token> getToken(Token token);
+        Token getToken(string jwt);
+
+        List<User> ConntectedUsers { get; set; }
     }
 
     public class ServerDataRuntime : IServerDataRuntime
     {
-        private static List<User> _connectedUsers = new List<User>();
+        private static readonly List<Token> _CurrentSessionTokens = new List<Token>();
+        public List<User> ConntectedUsers { get; set; }
 
-        public void AddConnectedUser(User user)
+        public ServerDataRuntime()
         {
-            foreach (var n in _connectedUsers.Where(u => u.Id == user.Id).ToArray()) _connectedUsers.Remove(n);
-            _connectedUsers.Add(user);
+            ConntectedUsers = new List<User>();
         }
 
-        public void RemoveConnectedUser(User user)
-        {
-            _connectedUsers.Remove(user);
-        }
 
-        public List<User> getConnected()
+        public void AddToken(Token token)
         {
-            return _connectedUsers;
-        }
-
-        public bool CheckToken(string token)
-        {
-            var singleOrDefault = _connectedUsers.SingleOrDefault(x => x.Token == token);
-            if (singleOrDefault != null)
+            if (CheckToken(token))
             {
-                return true;
+                RemoveToken(token);
             }
-
-            return false;
+            _CurrentSessionTokens.Add(token);
         }
+
+        public bool CheckRefreshToken(Token token)
+        {
+            var firstOrDefault = _CurrentSessionTokens.FirstOrDefault(token => token.JwtToken == token.JwtToken && token.RefreshToken == token.RefreshToken );
+            return firstOrDefault != null;
+        }
+
+        public bool CheckToken(Token token)
+        {
+            var firstOrDefault = _CurrentSessionTokens.FirstOrDefault(stringToCheck => stringToCheck.JwtToken == token.JwtToken );
+            return firstOrDefault != null;
+        }
+
+        public void RemoveToken(Token token)
+        {
+            _CurrentSessionTokens.RemoveAll(x=>x.JwtToken==token.JwtToken);
+        }
+
+        public List<Token> getToken(Token token)
+        {
+            return _CurrentSessionTokens.Where(x => x.JwtToken == token.JwtToken).ToList();
+        }
+        
+        public Token getToken(string jwt)
+        {
+            return _CurrentSessionTokens.SingleOrDefault(x => x.JwtToken == jwt);
+        }
+
     }
 }

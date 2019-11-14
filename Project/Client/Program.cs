@@ -31,6 +31,7 @@ namespace Client
                 .RegisterType<IClientDataRuntime, ClientDataRuntime>(new ContainerControlledLifetimeManager())
                 .RegisterType<IHomeController, HomeController>(new ContainerControlledLifetimeManager())
                 .RegisterType<IHomePanelView, HomePanelView>(new ContainerControlledLifetimeManager())
+                .RegisterType<ISignalRContext, SignalRContext>(new ContainerControlledLifetimeManager())
                 .RegisterType<IMessageController, MessageController>(new TransientLifetimeManager())
                 .RegisterType<IRestApiContext, RestApiContext>(new TransientLifetimeManager())
                 .RegisterType<IMessageView, MessageView>(new TransientLifetimeManager());
@@ -39,7 +40,7 @@ namespace Client
             unityContainer.RegisterInstance(unityContainer.Resolve<IClientDataRuntime>());
 
           
-            Application.Run((Form)unityContainer.Resolve<IHomeController>().GetStartGetView());
+            Application.Run(unityContainer.Resolve<IHomeController>().GetView());
 
         }
     }

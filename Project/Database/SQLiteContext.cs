@@ -8,6 +8,7 @@ namespace Database
 
         public DbSet<User> Users { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<ReceivedMessages> ReceivedMessages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
 
         public DbSet<ConversationUser> ConversationUsers { get; set; }
@@ -37,8 +38,10 @@ namespace Database
                 .HasMany(m=>m.Messages)
                 .WithOne(m=>m.Conversation)
                 .HasForeignKey(m=>m.ConversationId);
+            
+             
 
-           modelBuilder.Entity<Conversation>()
+            modelBuilder.Entity<Conversation>()
                 .HasMany(m => m.ConversationUsers)
                 .WithOne(m => m.Conversation)
                 .HasForeignKey(m => m.ConversationId);

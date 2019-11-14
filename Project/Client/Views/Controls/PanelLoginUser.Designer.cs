@@ -59,6 +59,7 @@ namespace Client.Views.Controls
             this.LoginHeaderPanel.Controls.Add(this.LoginHeaderLablel);
             this.LoginHeaderPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.LoginHeaderPanel.Location = new System.Drawing.Point(0, 0);
+            this.LoginHeaderPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LoginHeaderPanel.Name = "LoginHeaderPanel";
             this.LoginHeaderPanel.Size = new System.Drawing.Size(300, 75);
             this.LoginHeaderPanel.TabIndex = 0;
@@ -72,7 +73,7 @@ namespace Client.Views.Controls
             this.LoginHeaderLablel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F,
                 System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.LoginHeaderLablel.Location = new System.Drawing.Point(0, 52);
-            this.LoginHeaderLablel.Margin = new System.Windows.Forms.Padding(3);
+            this.LoginHeaderLablel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LoginHeaderLablel.Name = "LoginHeaderLablel";
             this.LoginHeaderLablel.Size = new System.Drawing.Size(300, 23);
             this.LoginHeaderLablel.TabIndex = 0;
@@ -84,6 +85,7 @@ namespace Client.Views.Controls
             this.PanelError.Controls.Add(this.ErrorTable);
             this.PanelError.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelError.Location = new System.Drawing.Point(0, 75);
+            this.PanelError.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PanelError.Name = "PanelError";
             this.PanelError.Size = new System.Drawing.Size(300, 25);
             this.PanelError.TabIndex = 2;
@@ -97,6 +99,7 @@ namespace Client.Views.Controls
             this.ErrorTable.Controls.Add(this.ErrorLabel, 0, 0);
             this.ErrorTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ErrorTable.Location = new System.Drawing.Point(0, 0);
+            this.ErrorTable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ErrorTable.Name = "ErrorTable";
             this.ErrorTable.RowCount = 1;
             this.ErrorTable.RowStyles.Add(
@@ -110,6 +113,7 @@ namespace Client.Views.Controls
             this.ErrorLabel.AutoSize = true;
             this.ErrorLabel.ForeColor = System.Drawing.Color.Red;
             this.ErrorLabel.Location = new System.Drawing.Point(120, 5);
+            this.ErrorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.ErrorLabel.Name = "ErrorLabel";
             this.ErrorLabel.Size = new System.Drawing.Size(60, 15);
             this.ErrorLabel.TabIndex = 1;
@@ -121,6 +125,7 @@ namespace Client.Views.Controls
             this.LoginBodyPanel.Controls.Add(this.BodyPanelTableLayout);
             this.LoginBodyPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.LoginBodyPanel.Location = new System.Drawing.Point(0, 100);
+            this.LoginBodyPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LoginBodyPanel.Name = "LoginBodyPanel";
             this.LoginBodyPanel.Size = new System.Drawing.Size(300, 100);
             this.LoginBodyPanel.TabIndex = 3;
@@ -138,6 +143,7 @@ namespace Client.Views.Controls
             this.BodyPanelTableLayout.Controls.Add(this.textBoxPassword, 1, 1);
             this.BodyPanelTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BodyPanelTableLayout.Location = new System.Drawing.Point(0, 0);
+            this.BodyPanelTableLayout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BodyPanelTableLayout.Name = "BodyPanelTableLayout";
             this.BodyPanelTableLayout.RowCount = 2;
             this.BodyPanelTableLayout.RowStyles.Add(
@@ -150,7 +156,8 @@ namespace Client.Views.Controls
             // LabelUsername
             // 
             this.LabelUsername.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.LabelUsername.Location = new System.Drawing.Point(11, 10);
+            this.LabelUsername.Location = new System.Drawing.Point(10, 10);
+            this.LabelUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelUsername.Name = "LabelUsername";
             this.LabelUsername.Size = new System.Drawing.Size(80, 29);
             this.LabelUsername.TabIndex = 0;
@@ -160,7 +167,8 @@ namespace Client.Views.Controls
             // LabelPassword
             // 
             this.LabelPassword.Dock = System.Windows.Forms.DockStyle.Right;
-            this.LabelPassword.Location = new System.Drawing.Point(9, 50);
+            this.LabelPassword.Location = new System.Drawing.Point(8, 50);
+            this.LabelPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelPassword.Name = "LabelPassword";
             this.LabelPassword.Size = new System.Drawing.Size(82, 50);
             this.LabelPassword.TabIndex = 1;
@@ -171,7 +179,7 @@ namespace Client.Views.Controls
             // 
             this.textBoxUsername.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.textBoxUsername.Location = new System.Drawing.Point(104, 13);
-            this.textBoxUsername.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.textBoxUsername.Margin = new System.Windows.Forms.Padding(10, 3, 4, 3);
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(150, 23);
             this.textBoxUsername.TabIndex = 2;
@@ -180,17 +188,19 @@ namespace Client.Views.Controls
             // 
             this.textBoxPassword.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.textBoxPassword.Location = new System.Drawing.Point(104, 63);
-            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(10, 3, 4, 3);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
             this.textBoxPassword.Size = new System.Drawing.Size(150, 23);
             this.textBoxPassword.TabIndex = 3;
+            this.textBoxPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPassword_KeyDown);
             // 
             // PanelSubmit
             // 
             this.PanelSubmit.Controls.Add(this.tableLayoutPanel1);
             this.PanelSubmit.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelSubmit.Location = new System.Drawing.Point(0, 200);
+            this.PanelSubmit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PanelSubmit.Name = "PanelSubmit";
             this.PanelSubmit.Size = new System.Drawing.Size(300, 50);
             this.PanelSubmit.TabIndex = 4;
@@ -203,6 +213,7 @@ namespace Client.Views.Controls
             this.tableLayoutPanel1.Controls.Add(this.loginButton, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(
@@ -215,6 +226,7 @@ namespace Client.Views.Controls
             this.loginButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.loginButton.AutoSize = true;
             this.loginButton.Location = new System.Drawing.Point(112, 11);
+            this.loginButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(75, 27);
             this.loginButton.TabIndex = 0;
@@ -230,6 +242,7 @@ namespace Client.Views.Controls
             this.Controls.Add(this.LoginBodyPanel);
             this.Controls.Add(this.PanelError);
             this.Controls.Add(this.LoginHeaderPanel);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "PanelLoginUser";
             this.Size = new System.Drawing.Size(300, 302);
             this.VisibleChanged += new System.EventHandler(this.PanelLoginUser_VisibleChanged);

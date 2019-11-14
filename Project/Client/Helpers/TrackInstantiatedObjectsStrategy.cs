@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Client.Controllers;
+using Domain;
 using Unity;
 using Unity.Builder;
 using Unity.Extension;
@@ -9,40 +10,7 @@ using Unity.Strategies;
 
 namespace Client.Helpers
 {
-    public class ObjectContainer
-    {
-        private readonly List<object> _instantiatedObjects = new List<object>();
-        public void Add(object toAdd)
-        {
-            _instantiatedObjects.Add(toAdd);
-        }
-        public IEnumerable<object> GetInstantiatedObjects()
-        {
-            return _instantiatedObjects;
-        }
-        public IEnumerable<T> GetInstantiatedObjects<T>()
-        {
-            return GetInstantiatedObjects().OfType<T>();
-        }
-
-        public void DisposeObject(object toRemove)
-        {
-            _instantiatedObjects.Remove(toRemove);
-        }
-
-        public void Clear()
-        {
-            _instantiatedObjects.Clear();
-        }
-
-        public MessageController CheckMessageIsInstanceExit(string user)
-        {
-            //var list = GetInstantiatedObjects<MessageController>();
-            
-            MessageController result = (MessageController) _instantiatedObjects.SingleOrDefault(x => x.GetType()==typeof(MessageController) && ((MessageController)x).TalksWithUser()==user);
-            return result;
-        }
-    }
+   
 
     public class TrackInstantiatedObjectsStrategy : BuilderStrategy
     {
@@ -56,7 +24,7 @@ namespace Client.Helpers
             _objectContainer.Add(builderContext.Existing);
         }
     }
-
+    
     public class TrackInstantiatedObjectsExtension : UnityContainerExtension
     {
         private readonly ObjectContainer _objectContainer = new ObjectContainer();
@@ -65,6 +33,31 @@ namespace Client.Helpers
             Context.Container.RegisterInstance(_objectContainer);
             Context.Strategies.Add(new TrackInstantiatedObjectsStrategy(_objectContainer),
                 UnityBuildStage.PostInitialization);
+        }
+    }
+    
+    public class ObjectContainer
+    {
+        private readonly List<object> _instantiatedObjects = new List<object>();
+        public void Add(object toAdd)
+        {
+            _instantiatedObjects.Add(toAdd);
+        }
+
+        public void DisposeObject(object toRemove)
+        {
+            _instantiatedObjects.Remove(toRemove);
+        }
+
+        public void Clear()
+        {
+            _instantiatedObjects.Clear();
+        }
+
+        public MessageController CheckMessageIsInstanceExit(User user)
+        {
+            MessageController result = (MessageController) _instantiatedObjects.SingleOrDefault(x => x.GetType()==typeof(MessageController) && ((MessageController)x).TalksWithUser().Id==user.Id);
+            return result;
         }
     }
 }

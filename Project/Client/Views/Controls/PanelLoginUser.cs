@@ -34,7 +34,7 @@ namespace Client.Views.Controls
             }
 
 
-            var eventArgs = new OnUserSubmitEventArgs(username, password);
+            var eventArgs = new SubmitUserArgs(username, password);
             OnUserSubmit(sender, eventArgs);
             
         }
@@ -50,6 +50,16 @@ namespace Client.Views.Controls
             this.PanelError.Visible = false;
             this.textBoxUsername.Text = "";
             this.textBoxPassword.Text = "";
+        }
+
+        private void textBoxPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                loginButton.PerformClick();
+            }
         }
     }
 }

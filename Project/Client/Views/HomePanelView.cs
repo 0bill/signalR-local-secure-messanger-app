@@ -66,17 +66,28 @@ namespace Client.Views
 
         public void UserLoggedOn()
         {
+            this.SuspendLayout();
             panelLoginUser.Visible = false;
             PanelUsers.Visible = true;
             TopMenu.Visible = true;
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
         
         public void UserLoggedOFF()
         {
+
             panelLoginUser.Visible = true;
             PanelUsers.Visible = false;
             TopMenu.Visible = false;
-            PanelUsers.Controls.Clear();
+            //PanelUsers.Controls.Clear();
+            
+            for (var ii = PanelUsers.Controls.Count - 1; ii >= 0; --ii) { 
+                var wdc = PanelUsers.Controls[ii] as PanelUserItem;
+                wdc.Visible = false;
+                wdc.Dispose();
+            }
+            
         }
 
 
@@ -90,9 +101,8 @@ namespace Client.Views
             panelLoginUser.ShowError(msg);
         }
 
-   
 
-        public void UserSelected(object sender, EventArgs e)
+        private void UserSelected(object sender, EventArgs e)
         {
             if (sender.GetType() == typeof(PanelUserItem))
             {

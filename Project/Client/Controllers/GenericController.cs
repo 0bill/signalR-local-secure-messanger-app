@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 namespace Client.Controllers
 {
+    
+
     public abstract class GenericController<T> 
     {
         protected T View;
@@ -14,7 +16,7 @@ namespace Client.Controllers
             LoadView();
         }
 
-        public T GetView()
+        protected T GetView()
         {
             return View;
         }
@@ -30,11 +32,13 @@ namespace Client.Controllers
         private protected abstract void View_Closed(object sender, EventArgs e);
 
 
-        public virtual void Dispose()
+        protected virtual void Dispose()
         {
             var view = this.View as Form;
             if (View == null) return;
             view.Closed -= View_Closed;
         }
     }
+
+   
 }

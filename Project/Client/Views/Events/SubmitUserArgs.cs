@@ -2,12 +2,12 @@
 
 namespace Client.Views.Events
 {
-    public class OnUserSubmitEventArgs : EventArgs
+    public class SubmitUserArgs : EventArgs
     {
         public string Username { get; private set; }
         public string Password { get; private set; }
 
-        public OnUserSubmitEventArgs(string username, string password)
+        public SubmitUserArgs(string username, string password)
         {
             this.Username = username;
             this.Password = password;

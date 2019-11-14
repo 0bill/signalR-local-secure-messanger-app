@@ -17,31 +17,30 @@ namespace ServerApp.Test
         public void TestTokenExist()
         {
             var serverDataRuntime = new ServerDataRuntime();
-            var user = new User {Id = 1, Username = "admin", Token = "Token"};
-            serverDataRuntime.AddConnectedUser(user);
-            var good = serverDataRuntime.CheckToken(user.Token);
-            var bad = serverDataRuntime.CheckToken("BAD");
+            
+            serverDataRuntime.AddToken(new Token(){JwtToken = "Good"});
+            var good = serverDataRuntime.CheckToken(new Token(){JwtToken = "Good"});
+            var bad = serverDataRuntime.CheckToken(new Token(){JwtToken = "BAD"});
             Assert.True(good);
             Assert.False(bad);
         }
         
         [Fact]
+        
         public void TestOverrideLoginUsers()
         {
             var serverDataRuntime = new ServerDataRuntime();
-            var user = new User {Id = 1, Username = "admin", Token = "Token"};
-            var user2 = new User {Id = 1, Username = "admin", Token = "Token"};
-            serverDataRuntime.AddConnectedUser(user);
-            serverDataRuntime.AddConnectedUser(user2);
-            var count = serverDataRuntime.getConnected().Count;
+            var token1 = new Token() {JwtToken = "token"};
+            var token2 = new Token() {JwtToken = "token"};
+
+            serverDataRuntime.AddToken(token1);
+            serverDataRuntime.AddToken(token2);
+            var count = serverDataRuntime.getToken(token1).Count;
             Assert.Equal(1,count);
         }
+        
+   
 
-        [Fact]
-        public void TestPostGetUsers()
-        {
-           
-            
-        }
+
     }
 }
