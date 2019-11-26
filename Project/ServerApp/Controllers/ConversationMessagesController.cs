@@ -11,6 +11,9 @@ using ServerApp.Data;
 
 namespace ServerApp.Controllers
 {
+    /// <summary>
+    /// Controller handle all request related to messages
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -24,7 +27,11 @@ namespace ServerApp.Controllers
         }
 
        
-        // POST: api/ConversationMessages
+        /// <summary>
+        /// Return all messages for conversation and mark as received
+        /// </summary>
+        /// <param name="conversation"></param>
+        /// <returns></returns>
         [HttpPost("messages")]
         public ActionResult<List<Message>> PostConversationMessage(Conversation conversation)
         {
@@ -47,6 +54,11 @@ namespace ServerApp.Controllers
 
         }
       
+        /// <summary>
+        /// Returns conversation id for matched users
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
         [HttpPost("conversation")]
         public ActionResult<Conversation> PostGetConversationBetweenUsers(List<User> users)
         {

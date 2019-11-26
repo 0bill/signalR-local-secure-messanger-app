@@ -10,8 +10,9 @@ using Unity.Strategies;
 
 namespace Client.Helpers
 {
-   
-
+    /// <summary>
+    /// Define builder strategy
+    /// </summary>
     public class TrackInstantiatedObjectsStrategy : BuilderStrategy
     {
         private readonly ObjectContainer _objectContainer;
@@ -25,9 +26,15 @@ namespace Client.Helpers
         }
     }
     
+    /// <summary>
+    /// Extension initialize tracking instance strategy
+    /// </summary>
     public class TrackInstantiatedObjectsExtension : UnityContainerExtension
     {
         private readonly ObjectContainer _objectContainer = new ObjectContainer();
+        /// <summary>
+        /// Initialize strategy
+        /// </summary>
         protected override void Initialize()
         {
             Context.Container.RegisterInstance(_objectContainer);
@@ -35,25 +42,39 @@ namespace Client.Helpers
                 UnityBuildStage.PostInitialization);
         }
     }
-    
+    /// <summary>
+    /// Container holds all instances of objects
+    /// </summary>
     public class ObjectContainer
     {
         private readonly List<object> _instantiatedObjects = new List<object>();
+        /// <summary>
+        /// Add object to container
+        /// </summary>
+        /// <param name="toAdd"></param>
         public void Add(object toAdd)
         {
             _instantiatedObjects.Add(toAdd);
         }
-
+        //Dispose tracked object
         public void DisposeObject(object toRemove)
         {
             _instantiatedObjects.Remove(toRemove);
         }
 
+        /// <summary>
+        /// Clear container
+        /// </summary>
         public void Clear()
         {
             _instantiatedObjects.Clear();
         }
 
+        /// <summary>
+        /// Check is Message controller is instanced with user
+        /// </summary>
+        /// <param name="user">User to check</param>
+        /// <returns></returns>
         public MessageController CheckMessageIsInstanceExit(User user)
         {
             MessageController result = (MessageController) _instantiatedObjects.SingleOrDefault(x => x.GetType()==typeof(MessageController) && ((MessageController)x).TalksWithUser().Id==user.Id);

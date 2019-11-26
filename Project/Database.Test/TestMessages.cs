@@ -37,7 +37,7 @@ namespace Database.Test
             sqLiteContext.SaveChanges();
         }
 
-        [Fact]
+        
         public void TestMessageDate()
         {
             var sqLiteContext = new SQLiteContext();
@@ -47,7 +47,7 @@ namespace Database.Test
         }
 
         
-        [Fact]
+        
         public void TestReceivedMSG()
         {
        

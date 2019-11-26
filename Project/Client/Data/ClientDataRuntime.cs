@@ -9,7 +9,9 @@ namespace Client.Data
         List<User> UserList { get; set; }
     }
 
-
+    /// <summary>
+    /// Class designed to store data globally
+    /// </summary>
     public class ClientDataRuntime : IClientDataRuntime
     {
         public User CurrentUser { get; set; }

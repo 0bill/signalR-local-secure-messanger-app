@@ -18,7 +18,7 @@ namespace Client.Contact
 {
     public interface IRestApiContext
     {
-        IRestApiContext EstablishConnection(Token token);
+        IRestApiContext SetConnection(Token token);
 
         Task<User> PostAuthUser(User user);
         Task<Conversation> PostGetConversation(List<User> users);
@@ -27,7 +27,9 @@ namespace Client.Contact
         
     }
 
-
+    /// <summary>
+    /// Class responsible for connecting to the Rest API server
+    /// </summary>
     public class RestApiContext : IRestApiContext
     {
         private HttpClient _client;
@@ -40,7 +42,12 @@ namespace Client.Contact
         {
             _container = container;
         }
-        public IRestApiContext EstablishConnection(Token token)
+        /// <summary>
+        /// Method creates and sets up http client
+        /// </summary>
+        /// <param name="token">Token representing the connection token</param>
+        /// <returns></returns>
+        public IRestApiContext SetConnection(Token token)
         {
             _token = token;
             HttpClientHandler clientHandler = new HttpClientHandler
@@ -58,6 +65,12 @@ namespace Client.Contact
             return this;
         }
 
+        /// <summary>
+        /// Method creates a request to the server to log the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Confirmed user with a valid token</returns>
+        /// <exception cref="DataNotFoundException"></exception>
         public async Task<User> PostAuthUser(User user)
         {
             var json = JsonConvert.SerializeObject(user);
@@ -70,8 +83,11 @@ namespace Client.Contact
             var verifiedUser = JsonConvert.DeserializeObject<User>(readAsStringAsync);
             return verifiedUser;
         }
-
-
+        
+        /// <summary>
+        /// Method creates a request to the server to get all users
+        /// </summary>
+        /// <returns>List of users allowed to talk</returns>
         public async Task<List<User>> PostGetAllUsers()
         {
             var readAsStringAsync = await ExecuteRequestTask("", "/UserList");
@@ -79,6 +95,11 @@ namespace Client.Contact
             return users;
         }
 
+        /// <summary>
+        /// Methods for refreshing an invalid token
+        /// </summary>
+        /// <param name="token">Expired token</param>
+        /// <returns>New token</returns>
         private async Task<Token> PostRefreshToken(Token token)
         {
             var json = JsonConvert.SerializeObject(token);
@@ -94,7 +115,11 @@ namespace Client.Contact
             return _token;
         }
 
-
+        /// <summary>
+        /// Method creates a request to the server to get all users for conversation
+        /// </summary>
+        /// <param name="conversationId">Represents conversation id</param>
+        /// <returns>List users assigned to current conversation</returns>
         public async Task<List<Message>> PostGetAllMessagesForConversation(int conversationId)
         {
             
@@ -107,6 +132,11 @@ namespace Client.Contact
             return messages;
         }
 
+        /// <summary>
+        /// Method creates a request to the server to get conversation with messages
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
         public async Task<Conversation> PostGetConversation(List<User> users)
         {            
             
@@ -116,6 +146,14 @@ namespace Client.Contact
             return conversationWithId;
         }
         
+        /// <summary>
+        /// Methods to establish a server connection
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="controlerURL"></param>
+        /// <returns></returns>
+        /// <exception cref="TokenNotValidException"></exception>
+        /// <exception cref="DataNotFoundException"></exception>
         private async Task<string> ExecuteRequestTask(string json, string controlerURL)
         {
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -130,7 +168,7 @@ namespace Client.Contact
                     if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         Token postRefreshToken = await PostRefreshToken(_token);
-                        EstablishConnection(postRefreshToken);
+                        SetConnection(postRefreshToken);
                     }
 
                     counter++;

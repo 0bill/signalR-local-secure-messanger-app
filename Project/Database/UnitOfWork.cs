@@ -39,14 +39,18 @@ namespace Database
             ConversationRepository = new ConversationRepository(_context);
             MessageRepository = new MessageRepository(_context);
         }
-
-        
+        /// <summary>
+        /// Dispose context
+        /// </summary>
         public void Dispose()
         {
             _context.Dispose();
         }
 
-        
+        /// <summary>
+        /// Commit transaction
+        /// </summary>
+        /// <returns></returns>
         public int Save()
         {
             return _context.SaveChanges();

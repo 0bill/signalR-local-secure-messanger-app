@@ -12,6 +12,9 @@ namespace Database.Repositories
         
     }
 
+    /// <summary>
+    /// Processes sql queries for user login
+    /// </summary>
     public class LoginUserRepository : Repository<User>, ILoginUserRepository
     {
         public SQLiteContext SqLiteContext => Context as SQLiteContext;
@@ -20,6 +23,11 @@ namespace Database.Repositories
         {
         }
 
+        /// <summary>
+        /// Validate users
+        /// </summary>
+        /// <param name="userToLogin"></param>
+        /// <returns></returns>
         public User IsLoginUserValid(User userToLogin)
         {
             var result = SqLiteContext.Users

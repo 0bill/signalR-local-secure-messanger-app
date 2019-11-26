@@ -13,6 +13,9 @@ namespace Database.Repositories
         List<int> GetConversationUsers(int newMessageConversationId);
     }
     
+    /// <summary>
+    /// Processes sql queries for conversations
+    /// </summary>
     public class ConversationRepository : Repository<Conversation>, IConversationRepository
     {
         private SQLiteContext SqLiteContext => Context as SQLiteContext;
@@ -21,6 +24,12 @@ namespace Database.Repositories
         {
         }
 
+        /// <summary>
+        /// Return conversation between two users
+        /// </summary>
+        /// <param name="user1Id"></param>
+        /// <param name="user2Id"></param>
+        /// <returns></returns>
         public Conversation GetConversation(int user1Id, int user2Id)
         {
             var result = SqLiteContext.ConversationUsers
@@ -32,6 +41,12 @@ namespace Database.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Create new conversation between users
+        /// </summary>
+        /// <param name="user1Id"></param>
+        /// <param name="user2Id"></param>
+        /// <returns></returns>
         public Conversation CreateNewConversation(int user1Id, int user2Id)
         {
             var user1 = SqLiteContext.Users.SingleOrDefault(u => u.Id == user1Id);
@@ -49,6 +64,11 @@ namespace Database.Repositories
             return entityEntryEntity;
         }
 
+        /// <summary>
+        /// Returns list of users ids for conversation
+        /// </summary>
+        /// <param name="newMessageConversationId"></param>
+        /// <returns></returns>
         public List<int> GetConversationUsers(int newMessageConversationId)
         {
             return SqLiteContext.ConversationUsers.Where(x=>x.ConversationId == newMessageConversationId).Select(x=>x.UserId).ToList();

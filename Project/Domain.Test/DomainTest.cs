@@ -26,7 +26,7 @@ namespace Domain.Test
             Assert.NotSame(password, user.Password);
         }
 
-        [Fact]
+        
         public void TestUserTokenAssigment()
         {
            

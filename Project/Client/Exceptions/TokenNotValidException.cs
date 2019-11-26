@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace Client.Exceptions
 {
+    /// <summary>
+    /// Exception for user token not valid
+    /// </summary>
     public class TokenNotValidException : Exception
     {
         public TokenNotValidException()

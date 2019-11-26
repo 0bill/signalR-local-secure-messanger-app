@@ -21,6 +21,9 @@ namespace Client.Controllers
         void TalksWithUser(User talkWith);
     }
 
+    /// <summary>
+    ///  Class controller that controls all logic for each message window
+    /// </summary>
     public class MessageController : GenericController<IMessageView>, IMessageController
     {
         private readonly IUnityContainer _container;
@@ -38,6 +41,11 @@ namespace Client.Controllers
             EventHelper.GlobalUserLoggedOff += Close;
         }
 
+        /// <summary>
+        /// Add message to view when new message incoming
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddIncomingMessage(object sender, EventArgs e)
         {
             var sendMessageArgs = (SendMessageArgs) e;
@@ -57,6 +65,11 @@ namespace Client.Controllers
             }
         }
 
+        /// <summary>
+        /// Sending message to the server
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMessageSend(object sender, EventArgs e)
         {
             var onSendMessage = (SendMessageArgs) e;
@@ -71,18 +84,30 @@ namespace Client.Controllers
 
 
 
+        /// <summary>
+        /// Close view and dispose controller
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close(object sender, EventArgs e)
         {
             View.CloseView();
             Dispose();
         }
 
-
+        /// <summary>
+        /// Dispose controller when view is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private protected override void View_Closed(object sender, EventArgs e)
         {
             Dispose();
         }
-
+        
+        /// <summary>
+        /// Dispose controller
+        /// </summary>
         protected override void Dispose()
         {
             Console.WriteLine(this.GetHashCode());
@@ -93,13 +118,20 @@ namespace Client.Controllers
             GC.Collect();
             base.Dispose();
         }
-
-
+        
+        /// <summary>
+        /// Method returns user assigned to conversation 
+        /// </summary>
+        /// <returns></returns>
         public User TalksWithUser()
         {
             return _talksWithUser;
         }
 
+        /// <summary>
+        /// Method get all messages from server and load all to view
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadMessages()
         {
             var converstationUsers = new List<User>();
@@ -113,7 +145,7 @@ namespace Client.Controllers
             try
             {
                 var restApiContext = _container.Resolve<RestApiContext>()
-                    .EstablishConnection(_dataRuntime.CurrentUser.Token);
+                    .SetConnection(_dataRuntime.CurrentUser.Token);
                 var postGetConversation = await restApiContext.PostGetConversation(converstationUsers);
                 _conversationId = postGetConversation.Id;
                 var messages = await restApiContext.PostGetAllMessagesForConversation(_conversationId);
@@ -150,11 +182,18 @@ namespace Client.Controllers
             Console.WriteLine("end");
         }
 
+        /// <summary>
+        /// Method active current view
+        /// </summary>
         public void Activate()
         {
             this.View.Activate();
         }
 
+        /// <summary>
+        /// Assign user to conversation
+        /// </summary>
+        /// <param name="talkWith"></param>
         public void TalksWithUser(User talkWith)
         {
             _talksWithUser = talkWith;

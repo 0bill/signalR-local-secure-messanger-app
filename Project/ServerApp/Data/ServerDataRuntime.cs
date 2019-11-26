@@ -18,6 +18,9 @@ namespace ServerApp.Data
         List<User> ConntectedUsers { get; set; }
     }
 
+    /// <summary>
+    /// Class designed to store data globally
+    /// </summary>
     public class ServerDataRuntime : IServerDataRuntime
     {
         private static readonly List<Token> _CurrentSessionTokens = new List<Token>();

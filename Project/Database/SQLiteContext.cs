@@ -20,6 +20,10 @@ namespace Database
             : base(options)
         { }
 
+        /// <summary>
+        /// Config sqlite context
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -31,17 +35,19 @@ namespace Database
                     @"Data Source=C:\Users\16pxd\Desktop\Desktop Appliaction\Desktop Appliaction\Project\Database\Data\SQLiteDB.db");
             }
         }
-
+        
+        /// <summary>
+        /// Create relationships
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Conversation>()
                 .HasMany(m=>m.Messages)
                 .WithOne(m=>m.Conversation)
                 .HasForeignKey(m=>m.ConversationId);
-            
-             
-
-            modelBuilder.Entity<Conversation>()
+          
+           modelBuilder.Entity<Conversation>()
                 .HasMany(m => m.ConversationUsers)
                 .WithOne(m => m.Conversation)
                 .HasForeignKey(m => m.ConversationId);
@@ -50,8 +56,6 @@ namespace Database
                 .HasMany(m => m.ConversationUsers)
                 .WithOne(m => m.User)
                 .HasForeignKey(m => m.UserId);
-
-
 
         }
     }

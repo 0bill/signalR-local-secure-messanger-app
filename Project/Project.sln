@@ -13,11 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerApp", "ServerApp\ServerApp.csproj", "{A311631D-A7D3-4532-B210-B47DB85FFDF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Views", "Client.Views\Client.Views.csproj", "{E234793F-63E1-400B-9076-82D7AB64BD60}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerApp.Test", "ServerApp.Test\ServerApp.Test.csproj", "{C859BB2A-2352-4990-BB2E-A7256345D55A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Test", "Domain.Test\Domain.Test.csproj", "{6233CCA8-4406-47BA-8D58-5BC2E798E68C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Test", "Domain.Test\Domain.Test.csproj", "{6233CCA8-4406-47BA-8D58-5BC2E798E68C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +43,6 @@ Global
 		{A311631D-A7D3-4532-B210-B47DB85FFDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A311631D-A7D3-4532-B210-B47DB85FFDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A311631D-A7D3-4532-B210-B47DB85FFDF0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E234793F-63E1-400B-9076-82D7AB64BD60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E234793F-63E1-400B-9076-82D7AB64BD60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E234793F-63E1-400B-9076-82D7AB64BD60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E234793F-63E1-400B-9076-82D7AB64BD60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C859BB2A-2352-4990-BB2E-A7256345D55A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C859BB2A-2352-4990-BB2E-A7256345D55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C859BB2A-2352-4990-BB2E-A7256345D55A}.Release|Any CPU.ActiveCfg = Release|Any CPU

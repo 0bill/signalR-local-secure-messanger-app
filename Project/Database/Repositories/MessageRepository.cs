@@ -15,6 +15,9 @@ namespace Database.Repositories
         void MarkMessagesAsReceived(int userId, List<Message> messages);
         void CheckOldMessages();
     }
+    /// <summary>
+    /// Processes sql queries for messages
+    /// </summary>
     public class MessageRepository : Repository<Message>, IMessageRepository
     {
         public SQLiteContext SqLiteContext => Context as SQLiteContext;
@@ -23,7 +26,11 @@ namespace Database.Repositories
         {
            
         }
-        
+        /// <summary>
+        /// Returns all messages for conversation 
+        /// </summary>
+        /// <param name="conversationId"></param>
+        /// <returns></returns>
         public List<Message> GetConversationMessages(int conversationId)
         {
             List<Message> messages = (from c in SqLiteContext.Conversations
@@ -44,14 +51,23 @@ namespace Database.Repositories
                 }).ToList();
             return messages;
         }
-
+        /// <summary>
+        /// Add new messages with current time
+        /// </summary>
+        /// <param name="newMessage"></param>
+        /// <returns></returns>
         public async Task AddNewMessage(Message newMessage)
         {
             newMessage.Timestamp = DateTime.Now;
            await SqLiteContext.Messages.AddAsync(newMessage);
            await SqLiteContext.SaveChangesAsync();
         }
-
+        
+        /// <summary>
+        /// Mark messages as received
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="messages"></param>
         public void MarkMessagesAsReceived(int userId, List<Message> messages)
         {
             
@@ -78,6 +94,9 @@ namespace Database.Repositories
 
         }
 
+        /// <summary>
+        /// Check for old messages and delete old ones
+        /// </summary>
         public void CheckOldMessages()
         {
             var messageslist = SqLiteContext.Messages.Where(x => x.Timestamp.AddDays(180) <= DateTime.Now).ToList();

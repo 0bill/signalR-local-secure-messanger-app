@@ -15,6 +15,9 @@ using ServerApp.Data;
 
 namespace ServerApp.Controllers
 {
+    /// <summary>
+    /// Controller handle all request related to user login
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserAuthController : ControllerBase
@@ -31,8 +34,11 @@ namespace ServerApp.Controllers
             _config = config;
         }
 
-
-        // POST: api/UserAuth
+        /// <summary>
+        /// Handle user login
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<User> PostUser(User user)
         {
@@ -52,6 +58,11 @@ namespace ServerApp.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Refresh expired tokens
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [HttpPost("refresh")]
         public ActionResult<User> PostRefreshToken(Token token)
         {
@@ -62,7 +73,9 @@ namespace ServerApp.Controllers
         
                 var jwtSecurityToken = new JwtSecurityToken(token.JwtToken);
                 var claim = jwtSecurityToken.Claims.SingleOrDefault(x => x.Type == "unique_name");
-
+                
+                //TODO: check user details 
+                
                 _dataRuntime.RemoveToken(token);
                 var newToken = new Token();
                 newToken.UserId = userId;
@@ -75,6 +88,12 @@ namespace ServerApp.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Generate valid token for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
         private string GenerateToken(int userId, string username)
         {
             //generate token

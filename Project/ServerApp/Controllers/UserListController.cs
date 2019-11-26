@@ -9,6 +9,9 @@ using ServerApp.Data;
 
 namespace ServerApp.Controllers
 {
+    /// <summary>
+    /// Controller handle all request related to users
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -21,6 +24,10 @@ namespace ServerApp.Controllers
             _unitOfWork = unitOfWork;
         }
         
+        /// <summary>
+        /// Return list of users
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<List<User>> PostUserList()
         {

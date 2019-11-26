@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Client.Views.Controls
@@ -26,6 +27,17 @@ namespace Client.Views.Controls
         private void OnControlClick(object sender , EventArgs e)
         {
             OnDoubleClick(e);
+        }
+
+        private void LabelUserName_MouseHover(object sender, EventArgs e)
+        {
+            this.BackColor = Color.CornflowerBlue;
+        }
+
+
+        private void PanelUserItem_MouseLeave(object sender, EventArgs e)
+        {
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
         }
     }
 }

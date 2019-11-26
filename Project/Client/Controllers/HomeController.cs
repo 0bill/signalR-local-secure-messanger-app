@@ -23,6 +23,9 @@ namespace Client.Controllers
         Form GetView();
     }
 
+    /// <summary>
+    /// Class controller that controls all logic for home window
+    /// </summary>
     class HomeController : GenericController<IHomePanelView>, IHomeController
     {
         private IUnityContainer _container;
@@ -38,6 +41,11 @@ namespace Client.Controllers
             EventHelper.PlayIncomingSound += IncomeSound;
         }
         
+        /// <summary>
+        /// Method plays sound on incoming message
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IncomeSound(object sender, EventArgs e)
         { 
 
@@ -51,7 +59,11 @@ namespace Client.Controllers
 
         }
 
-        
+        /// <summary>
+        /// Method process login user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void LoginUser(object sender, EventArgs e)
         {
             var userSubmit = (SubmitUserArgs) e;
@@ -66,7 +78,7 @@ namespace Client.Controllers
             try
             {
                 var restApiContext = _container.Resolve<IRestApiContext>();
-                var establishConnection =  restApiContext.EstablishConnection(null);
+                var establishConnection =  restApiContext.SetConnection(null);
                 var post = await establishConnection.PostAuthUser(providedUser);
                 if (post == null) View.ShowLoginError("Something went wrong..");;
                 _dataRuntime.CurrentUser = post;
@@ -94,10 +106,13 @@ namespace Client.Controllers
         }
 
 
+        /// <summary>
+        /// Method activate program after user login successfully
+        /// </summary>
         private async void OnSuccessLogin()
         {
             var post = await _container.Resolve<IRestApiContext>()
-                .EstablishConnection(_dataRuntime.CurrentUser.Token)
+                .SetConnection(_dataRuntime.CurrentUser.Token)
                 .PostGetAllUsers();
             post?.Remove(post.SingleOrDefault(x => x.Id == _dataRuntime.CurrentUser.Id));
             _dataRuntime.UserList = post;
@@ -106,10 +121,13 @@ namespace Client.Controllers
             View.LogoutUser += LogoutUser;
             EventHelper.GlobalUserLoggedOff += LogoutUser;
             LoadUsersTopPanel(_dataRuntime.UserList);
-            _container.Resolve<ISignalRContext>().EstablishConnection(_dataRuntime.CurrentUser.Token);
+            _container.Resolve<ISignalRContext>().SetConnection(_dataRuntime.CurrentUser.Token);
             
         }
 
+        /// <summary>
+        /// Method logout user from program
+        /// </summary>
         private void LogoutUser()
         {
             View.OnUserClick -= OnUserClick;
@@ -120,18 +138,30 @@ namespace Client.Controllers
             _container.Resolve<ObjectContainer>().Clear();
         }
 
+        /// <summary>
+        /// Method logout user from program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogoutUser(object sender, EventArgs e)
         {
             LogoutUser();
         }
-
-
+        
+        /// <summary>
+        /// Method load users to the view
+        /// </summary>
+        /// <param name="users"></param>
         private void LoadUsersTopPanel(List<User> users)
         {
             View.FillPanelWithUsers(users);
         }
 
-
+        /// <summary>
+        /// Method lunch message window for current conversaton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnUserClick(object sender, EventArgs e)
         {
 
@@ -154,6 +184,10 @@ namespace Client.Controllers
         }
 
 
+        /// <summary>
+        /// Returns controller view for start program
+        /// </summary>
+        /// <returns></returns>
         public new Form GetView()
         {
             return (Form)base.GetView();

@@ -17,6 +17,9 @@ using ServerApp.Data;
 
 namespace ServerApp.Hubs
 {
+    /// <summary>
+    /// This class represents endpoint for SignalR connections
+    /// </summary>
     [Authorize]
     public class ChatHub : Hub
     {
@@ -31,6 +34,10 @@ namespace ServerApp.Hubs
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Method execute for new connected user
+        /// </summary>
+        /// <returns></returns>
         public override Task OnConnectedAsync()
         {
             Clients.All.SendAsync("IncomingMessage", "Dispose");
@@ -63,6 +70,11 @@ namespace ServerApp.Hubs
             return base.OnConnectedAsync();
         }
 
+        /// <summary>
+        /// Method execute for case user ends connection
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         public override Task OnDisconnectedAsync(Exception exception)
         {
             Clients.All.SendAsync("IncomingMessage", "Dispose");
@@ -75,6 +87,10 @@ namespace ServerApp.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
+        /// <summary>
+        /// Sending message for each user involved to conversation
+        /// </summary>
+        /// <param name="newMessage"></param>
         public void Send(Message newMessage)
         {
             var singleOrDefault = _dataRuntime.ConntectedUsers.SingleOrDefault(x => x.ConnectionId == Context.ConnectionId);
@@ -89,12 +105,15 @@ namespace ServerApp.Hubs
             {
                 var user = _dataRuntime.ConntectedUsers.SingleOrDefault(x=>x.Id == conversationUser);
                 if(user!=null)
-                Clients.Client(user.ConnectionId).SendAsync("IncomingMessage", newMessage);
+                    Clients.Client(user.ConnectionId).SendAsync("IncomingMessage", newMessage);
             }
 
             
         }
-
+        /// <summary>
+        /// Method mark received messages as received
+        /// </summary>
+        /// <param name="message"></param>
         public void ReceivedMessage(Message message)
         {
             var singleOrDefault = _dataRuntime.ConntectedUsers.SingleOrDefault(x => x.ConnectionId == Context.ConnectionId);
