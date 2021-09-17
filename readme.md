@@ -5,7 +5,7 @@ server and client application build using .NET CORE and SignalR
 The project is to create an application for DOGE FINANCIAL, used for communication 
 between company users. The program is to be characterized by a high standard of security, as the data transmitted is sensitive and requires special treatment and protection against third parties. Also, the program is to send data between users as soon as possible - in real time. The only place to store data is to be the database that is hosted on the company's server. Only verified employees can use the program, they will can access with the appropriate login and password. 
 
-![App overview 4](./Images/4.png)
+![App overview 4](./Images/4.PNG)
 
 ### Security 
 - Password encryption 
