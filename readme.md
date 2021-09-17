@@ -44,7 +44,9 @@ between company users. The program is to be characterized by a high standard of 
 - Preventing multi-logging 
 - Session
 
+![App overview 3](./Images/3.jpg)
 ![App overview 1](./Images/1.jpg)
 ![App overview 2](./Images/2.jpg)
-![App overview 3](./Images/3.jpg)
+
+
 
