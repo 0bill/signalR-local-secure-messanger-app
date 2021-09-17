@@ -5,6 +5,11 @@ using System.Text;
 
 namespace Domain.Helpers
 {
+    /// <summary>
+    /// Modified version by Aleksy Ruszala
+    /// C# AES 256 bits Encryption Library with Salt
+    /// https://www.codeproject.com/Articles/769741/Csharp-AES-bits-Encryption-Library-with-Salt
+    /// </summary>
     public class AESHelper
     {
         public string DecryptText(string input, string password)
