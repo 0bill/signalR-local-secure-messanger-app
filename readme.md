@@ -1,12 +1,12 @@
-# Desktop Messenger Application
+# Desktop Messenger Application [prototype] [academic]
 server and client application build using .NET CORE and SignalR
 
 ### Scope
-The project is to create an application for DOGE FINANCIAL, used for communication 
-between company users. The program is to be characterized by a high standard of security, as the data transmitted is sensitive and requires special treatment and protection against third parties. Also, the program is to send data between users as soon as possible - in real time. The only place to store data is to be the database that is hosted on the company's server. Only verified employees can use the program, they will can access with the appropriate login and password. 
+The project is to create an application for DOGE FINANCIAL, which will be used for communication between company users. The program should be characterized by a high level of security, since the data transmitted are sensitive and require special treatment and protection from third parties. In addition, the program should send data between users as quickly as possible - in real time. The only place where data are stored is the database, which is hosted on the company's server. Only verified employees can use the program, they get access with the appropriate login and password.
 
 ![App overview 4](./Images/4.PNG)
 
+## Key features
 ### Security 
 - Password encryption 
 - Message encryption 
