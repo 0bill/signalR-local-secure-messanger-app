@@ -49,4 +49,32 @@ The project is to create an application for DOGE FINANCIAL, which will be used f
 ![App overview 2](./Images/2.jpg)
 
 
+# Diagrams 
+![image](https://user-images.githubusercontent.com/28375942/136117612-ac7cd647-275a-460b-bf43-f7017454e5c1.png)
+![image](https://user-images.githubusercontent.com/28375942/136117773-473243ee-6184-4a77-8a3d-3b13b49eef40.png)
+![image](https://user-images.githubusercontent.com/28375942/136117792-46c7a58a-be18-43a8-b586-301adc977d04.png)
+![image](https://user-images.githubusercontent.com/28375942/136117809-b09c8588-e1a3-419a-b53e-c27f4464268d.png)
+![image](https://user-images.githubusercontent.com/28375942/136117818-fe1504a1-c19c-456f-af4e-44bdba74b141.png)
+![image](https://user-images.githubusercontent.com/28375942/136117831-bb2e2df0-cd5e-4638-bd2d-5fc80a7d6199.png)
+
+# Timeline 
+![image](https://user-images.githubusercontent.com/28375942/136117859-2f4d8130-0a50-40f8-8532-1fe3e64256b1.png)
+
+# Testing
+On the one hand, the test object was the application code, on the other hand the 
+application itself on the user's side. To this end, techniques called white and black box tests 
+were used. Testing the white box allowed to test the program based on the internal structure 
+of the application. To achieve this, applications were tested using unit tests where they could 
+be used. 
+![image](https://user-images.githubusercontent.com/28375942/136117695-6e65a792-28b2-4714-85d3-ed4d7664e047.png)
+
+Because the application has a complex structure, it uses several frameworks and the logic has 
+been divided between the server and the client. Therefore, the program was also tested as a 
+product. For this purpose, we will use a technique called Black Box. Testing consisted of testing 
+individual functions of the application by following specific steps and using various types of 
+input data (normal, exceptional and extreme); making sure that the data received during the 
+tests are as expected.
+
+
+
 
